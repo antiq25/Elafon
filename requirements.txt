@@ -18,3 +18,4 @@ yarg==0.1.9
 gunicorn
 psycopg2-binary
 psycopg2
+Flask_migrate
