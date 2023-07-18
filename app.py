@@ -9,16 +9,12 @@ import os
 
 app = Flask(__name__)
 
-# Set the database connection URL
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://jsxorikjuzxrby:cff7d58febf13fc5f775cdc6d680bfaf78b6730b9aed172f9e88aa2939096dda@ec2-3-210-173-88.compute-1.amazonaws.com:5432/d91sse9qfm2dk3'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# SQLite database in the same directory as this script
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://jsxorikjuzxrby:cff7d58febf13fc5f775cdc6d680bfaf78b6730b9aed172f9e88aa2939096dda@ec2-3-210-173-88.compute-1.amazonaws.com:5432/d91sse9qfm2dk3'
 
-# Set the secret key
 app.secret_key = os.urandom(16)
 
 db = SQLAlchemy(app)
-
-
 
 class Group(db.Model):
     __tablename__ = 'group'
@@ -40,13 +36,13 @@ class Technician(db.Model):
         return check_password_hash(self.password, password)
 
 
-class Tool(db.Model):
-    __tablename__ = 'tool'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=True, nullable=False)
-    is_signed_out = db.Column(db.Boolean, default=False)
-    group_id = db.Column(db.Integer, db.ForeignKey('group.id'), nullable=False)
-    signouts = db.relationship('Signout', backref='tool', lazy=True)
+    class Tool(db.Model):
+        __tablename__ = 'tool'
+        id = db.Column(db.Integer, primary_key=True)
+        name = db.Column(db.String(80), unique=True, nullable=False)
+        is_signed_out = db.Column(db.Boolean, default=False)
+        group_id = db.Column(db.Integer, db.ForeignKey('group.id'), nullable=False)
+        signouts = db.relationship('Signout', backref='tool', lazy=True)
 
 
 class Key(db.Model):
@@ -379,3 +375,4 @@ if __name__ == '__main__':
         db.create_all()
         add_default_tools_and_keys()
         app.run(debug=True)
+
