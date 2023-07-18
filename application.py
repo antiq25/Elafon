@@ -10,7 +10,7 @@ import os
 app = Flask(__name__)
 
 # SQLite database in the same directory as this script
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///my_database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://jsxorikjuzxrby:cff7d58febf13fc5f775cdc6d680bfaf78b6730b9aed172f9e88aa2939096dda@ec2-3-210-173-88.compute-1.amazonaws.com:5432/d91sse9qfm2dk3'
 
 app.secret_key = os.urandom(16)
 
@@ -332,7 +332,7 @@ def add_item():
             new_item = Tool(name=name, group_id=group_id)
         elif item_type == 'key':
             new_item = Key(name=name, group_id=group_id)
-        
+
         db.session.add(new_item)
 
         try:
@@ -352,22 +352,22 @@ def add_default_tools_and_keys():
     default_tools = ['K400', 'Propress', 'Combustion Analyzer']
     default_keys = ['Canadian', 'Electra', 'OMA', 'Concordia', 'Vine']
     default_group = Group.query.filter_by(name="Default").first()
-    
+
     if default_group is None:
         default_group = Group(name="Default")
         db.session.add(default_group)
         db.session.commit()
-    
+
     for tool_name in default_tools:
         if not Tool.query.filter_by(name=tool_name).first():
             new_tool = Tool(name=tool_name, group_id=default_group.id)
             db.session.add(new_tool)
-    
+
     for key_name in default_keys:
         if not Key.query.filter_by(name=key_name).first():
             new_key = Key(name=key_name, group_id=default_group.id)
             db.session.add(new_key)
-    
+
     db.session.commit()
 
 
