@@ -13,7 +13,7 @@ app.secret_key = os.urandom(16)
 
 # Connect to the PostgreSQL database
 def connect_to_database():
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://jmcubgfefyrwqr:54e47031473d1b5eefa0782f9d8b093e4745c6ddae5aba0653dcfdbf5949a62b@ec2-52-205-45-222.compute-1.amazonaws.com:5432/d73mbtv3ger9oc'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://xoubsjtznrfumb:1ff6b42f7d7b58bbf8accac11f8a2f0365e2b5c53505bf0a1e5f785db71bfdb4@ec2-52-205-45-222.compute-1.amazonaws.com:5432/d9r6a6l894ufhb'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 connect_to_database()
