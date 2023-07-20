@@ -1,4 +1,4 @@
-#!/Users/anti/Desktop/testnet/eqframework/ToolNet/toolsign/Elafon/myenv/bin/python
+#!/Users/anti/Elafon/myenv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

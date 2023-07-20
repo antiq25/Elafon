@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
@@ -8,18 +9,28 @@ from datetime import datetime
 import os
 
 app = Flask(__name__)
-
-# SQLite database in the same directory as this script
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://jsxorikjuzxrby:cff7d58febf13fc5f775cdc6d680bfaf78b6730b9aed172f9e88aa2939096dda@ec2-3-210-173-88.compute-1.amazonaws.com:5432/d91sse9qfm2dk3'
-
 app.secret_key = os.urandom(16)
 
+# Connect to the PostgreSQL database
+def connect_to_database():
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://jmcubgfefyrwqr:54e47031473d1b5eefa0782f9d8b093e4745c6ddae5aba0653dcfdbf5949a62b@ec2-52-205-45-222.compute-1.amazonaws.com:5432/d73mbtv3ger9oc'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+connect_to_database()
+
+# Create the SQLAlchemy database object
 db = SQLAlchemy(app)
+
+# Create the Flask-Migrate object
+migrate = Migrate(app, db)
 
 class Group(db.Model):
     __tablename__ = 'group'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
+    tools = db.relationship('Tool', backref='group', lazy=True)
+    keys = db.relationship('Key', backref='group', lazy=True)
+    signouts = db.relationship('Signout', backref='group', lazy=True)
 
 
 class Technician(db.Model):
@@ -36,13 +47,13 @@ class Technician(db.Model):
         return check_password_hash(self.password, password)
 
 
-    class Tool(db.Model):
-        __tablename__ = 'tool'
-        id = db.Column(db.Integer, primary_key=True)
-        name = db.Column(db.String(80), unique=True, nullable=False)
-        is_signed_out = db.Column(db.Boolean, default=False)
-        group_id = db.Column(db.Integer, db.ForeignKey('group.id'), nullable=False)
-        signouts = db.relationship('Signout', backref='tool', lazy=True)
+class Tool(db.Model):
+    __tablename__ = 'tool'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=True, nullable=False)
+    is_signed_out = db.Column(db.Boolean, default=False)
+    group_id = db.Column(db.Integer, db.ForeignKey('group.id'), nullable=False)
+    signouts = db.relationship('Signout', backref='tool', lazy=True)
 
 
 class Key(db.Model):
@@ -82,12 +93,6 @@ def handle_exception(e):
     return redirect(url_for('error_page'))
 
 
-@app.route('/error')
-def error_page():
-    errors = [flash_message for flash_message in session.get('_flashes', [])]
-    return render_template('error.html', errors=errors)
-
-
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -95,6 +100,11 @@ def login_required(f):
             return redirect(url_for('login'))
         return f(*args, **kwargs)
     return decorated_function
+
+@app.route('/error')
+def error_page():
+    errors = [flash_message for flash_message in session.get('_flashes', [])]
+    return render_template('error.html', errors=errors)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -300,8 +310,6 @@ def return_item():
     return render_template('return_item.html', tech=tech, tech_signouts=tech_signouts)
 
 
-
-
 @app.route('/ui')
 def ui():
     return render_template('ui.html')
@@ -346,7 +354,6 @@ def add_item():
     groups = Group.query.all()
     return render_template('add_item.html', groups=groups)
 
-
 def add_default_tools_and_keys():
     default_tools = ['K400', 'Propress', 'Combustion Analyzer']
     default_keys = ['Canadian', 'Electra', 'OMA', 'Concordia', 'Vine']
@@ -375,4 +382,3 @@ if __name__ == '__main__':
         db.create_all()
         add_default_tools_and_keys()
         app.run(debug=True)
-
