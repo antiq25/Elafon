@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
@@ -9,14 +8,13 @@ from datetime import datetime
 import os
 
 app = Flask(__name__)
+
+# SQLite database in the same directory as this script
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://xoubsjtznrfumb:1ff6b42f7d7b58bbf8accac11f8a2f0365e2b5c53505bf0a1e5f785db71bfdb4@ec2-52-205-45-222.compute-1.amazonaws.com:5432/d9r6a6l894ufhb'
+
 app.secret_key = os.urandom(16)
 
-# Connect to the PostgreSQL database
-def connect_to_database():
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://xoubsjtznrfumb:1ff6b42f7d7b58bbf8accac11f8a2f0365e2b5c53505bf0a1e5f785db71bfdb4@ec2-52-205-45-222.compute-1.amazonaws.com:5432/d9r6a6l894ufhb'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-connect_to_database()
+db = SQLAlchemy(app)
 
 # Create the SQLAlchemy database object
 db = SQLAlchemy(app)
