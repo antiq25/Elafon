@@ -1,0 +1,115 @@
+{% extends '/dashboard/index.html' %}
+
+{% block content %}
+<style>
+ 
+</style>
+<div class="container">
+    <h1 class="dashboard-heading">Admin Dashboard</h1>
+    <div class="row">
+        <!-- Create Technician Card -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Create Technician</h2>
+                    <form method="POST" action="{{ url_for('manage_technicians') }}">
+                        <input type="hidden" name="action" value="create">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name:</label>
+                            <input type="text" name="name" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password:</label>
+                            <input type="password" name="password" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create Technician</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Delete Technician Card -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Delete Technician</h2>
+                    <form method="POST" action="{{ url_for('manage_technicians') }}">
+                        <input type="hidden" name="action" value="delete">
+                        <div class="mb-3">
+                            <label for="technician_id" class="form-label">Technician:</label>
+                            <select name="technician_id" class="form-select" required>
+                                {% for technician in technicians %}
+                                {% if technician.id != session['tech_id'] %}
+                                <option value="{{ technician.id }}">{{ technician.name }}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-danger">Delete Technician</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Wipe Sign-Outs and Make Admin Cards -->
+    <div class="row mt-3">
+        <!-- Wipe Sign-Outs Card -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Wipe Sign-Outs</h2>
+                    <form method="POST" action="{{ url_for('manage_technicians') }}">
+                        <input type="hidden" name="action" value="wipe_signouts">
+                        <div class="mb-3">
+                            <label for="technician_id" class="form-label">Technician:</label>
+                            <select name="technician_id" class="form-select" required>
+                                {% for technician in technicians %}
+                                {% if technician.signouts|length > 0 %}
+                                <option value="{{ technician.id }}">{{ technician.name }}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-warning">Wipe Sign-Outs</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Make Admin Card -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Make Admin</h2>
+                    <form method="POST" action="{{ url_for('manage_technicians') }}">
+                        <input type="hidden" name="action" value="make_admin">
+                        <div class="mb-3">
+                            <label for="technician_id" class="form-label">Technician:</label>
+                            <select name="technician_id" class="form-select" required>
+                                {% for technician in technicians %}
+                                {% if technician.role != 'admin' %}
+                                <option value="{{ technician.id }}">{{ technician.name }}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Make Admin</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Restore All Sign-Outs Card -->
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Restore All Sign-Outs</h2>
+                    <form method="POST" action="{{ url_for('manage_technicians') }}">
+                        <input type="hidden" name="action" value="restore_all_signouts">
+                        <button type="submit" class="btn btn-success">Restore All Sign-Outs</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

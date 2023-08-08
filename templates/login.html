@@ -1,30 +1,96 @@
-<!DOCTYPE html>
-<html>
+{% extends 'layout.html' %}
 
-<head>
-  <title>EQ Framework</title>
-  <link rel="stylesheet" href="../static/css/loginlog.css">
-</head>
+{% block content %}
 
-<body>
-  <form class="animated-form" action="/login" method="post">
-    <div class="container">
-      <h3 class="animated-heading3"></h3>
-      <div class="logo-container">
-        <img src="../static/ElafonText.png" alt="Elafon Logo" class="logo">
-      </div>
-      <h3 class="animated-heading3"></h3>
-      <label for="name">Login</label>
-      <input type="text" id="name" name="name" required>
-      <label for="password"></label>
-      <input type="password" id="password" name="password" required>
-      <input class="animated-button" type="submit" value="Login">
-      <p>Dont have an account?</p>
-      <div class="shared-bar">
-        <button class="animated-link" onclick="location.href='/signup'">Signup</button>
-      </div>
-    </div>
-  </form>
-</body>
 
-</html>
+<div class="full-height relative p-y-30 v-center bg-img" style="background-image: url(../static/images/bg-img7.jpg)">
+    <div class="container p-y-70">
+        <div class="m-x-auto" style="max-width: 500px;">
+            
+            <div class="card mb-15">
+                <div class="card-body p-x-25">
+                    <ul class="nav nav-tabs nav-pills text-center p-x-50" role="tablist">
+                        <li class="nav-item m-x-auto">
+                            <a class="nav-link active p-x-40" data-bs-toggle="tab" href="#tab-sign-in" role="tab">
+                                <i class="fas fa-lock mr-5 va-middle"></i>
+                                <span class="va-middle">Sign In</span>
+                            </a>
+                        </li>
+                        <li class="nav-item nav-tabs nav-pills m-x-auto">
+                            <a class="nav-link p-x-40" data-bs-toggle="tab" href="#tab-register" role="tab">
+                                <i class="fas fa-user mr-5 va-middle"></i>
+                                <span class="va-middle">Register</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active mt-20 p-15" id="tab-sign-in" role="tabpanel">
+                            <form id="login-form3" action="/login" method="post"> 
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="name" value="name" placeholder="&#xf2bd; Username" id="name" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="password" class="form-control" name="password" type="password" id="password" placeholder="&#xf11c; Password" required>
+                                </div>
+
+                                <div class="row v-center mt-30">
+                                    <div class="col-lg-5 tablet-lg-top-30">
+                                        <div class="checkbox checkbox-primary ml-10">
+                                            <label class="hidden"><input type="checkbox"></label>
+                                            <input id="checkbox-login2" type="checkbox">
+                                            <label for="checkbox-login2"><span class="fw-light">Remember Me</span></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-7 text-right">
+                                        <button type="submit" class="btn btn-sm btn-primary tablet-lg-fw">
+                                            <i class="fas fa-sign-in-alt mr-5"></i> Sign In
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="pt-60 text-center">
+                                <p style="margin-bottom:4px;">Sign in with:</p>
+                                <a href="#x" class="btn btn-sm btn-outline-facebook mt-5">
+                                    <span class="fab fa-facebook-f mr-5"></span>
+                                    <span>Facebook</span>
+                                </a>
+                                <a href="#x" class="btn btn-sm btn-outline-twitter mt-5">
+                                    <span class="fab fa-twitter mr-5"></span>
+                                    <span>Twitter</span>
+                                </a>
+                                <a href="#x" class="btn btn-sm btn-outline-warning mt-5">
+                                    <span class="fab fa-google mr-5"></span>
+                                    <span>Google</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade mt-20 p-15" id="tab-register" role="tabpanel">
+                            <form id="register-form3" action="/signup" method="post">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="name" value="name" placeholder="&#xf2bd; Username" id="register-name" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" name="password" id="register-password" placeholder="&#xf11c; Password" required>
+                                </div>
+                                <div class="row v-center mt-30">
+                                    <div class="col-xl-7 tablet-xl-top-30">
+                                        <div class="checkbox checkbox-primary ml-10">
+                                            <label class="hidden"><input type="checkbox"></label>
+                                            <input id="checkbox-register2" type="checkbox">
+                                            <label for="checkbox-register2"><span> Accept <a href="#x">Terms &amp; Conditions</a></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-5 text-right">
+                                        <button type="submit" class="btn btn-sm btn-primary tablet-xl-fw">
+                                            <i class="fas fa-user mr-5"></i> Register
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      
+{% endblock %}

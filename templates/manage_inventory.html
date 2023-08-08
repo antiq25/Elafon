@@ -1,0 +1,144 @@
+{% extends '/dashboard/index.html' %}
+{% block content %}
+  <div id="loader" class="loader" style="display:none">Loading...</div>
+  <div class="table-responsive">
+    <table id="inventory-table" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Quantity</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+</div>
+  <script>
+      (function() {
+        $(document).ready(function() {
+          var inventoryTable = $('#inventory-table').DataTable({
+            language: {
+              search: "Filter items:",
+              lengthMenu: "Show _MENU_ items per page",
+              info: "Showing _START_ to _END_ of _TOTAL_ items",
+              infoEmpty: "No items available",
+              infoFiltered: "(filtered from _MAX_ total items)",
+              paginate: {
+                first: "First",
+                last: "Last",
+                next: "Next",
+                previous: "Previous"
+              }
+            },
+            processing: true,
+          });
+    
+          function refreshTable() {
+            $('#loader').show();
+            $.getJSON('/get_inventory', function(data) {
+              if (Array.isArray(data)) {
+                inventoryTable.clear();
+                data.forEach(function(item) {
+                  var updateBtnMarkup = '<button data-item-id="' + item.id + 
+                                        '" class="btn btn-primary update-inventory-btn">Update</button>';
+                  var deleteBtnMarkup = '<button data-item-id="' + item.id + 
+                                        '" class="btn btn-danger delete-inventory-btn">Delete</button>';
+                  inventoryTable.row.add([
+                    item.name,
+                    item.type,
+                    item.quantity,
+                    updateBtnMarkup + " " + deleteBtnMarkup
+                  ]);
+                });
+                inventoryTable.draw();
+              } else {
+                console.log(data.message);
+              }
+              $('#loader').hide();
+            });
+          }
+    
+          $(document).on('click', '.update-inventory-btn', function() {
+            var itemId = $(this).data('item-id');
+            var newQuantity = prompt("Enter new quantity:");
+            if (newQuantity != null) {
+                var row = $(this).closest('tr');
+                var oldQuantity = row.find("td:eq(2)").html(); // Get the old quantity
+                row.find("td:eq(2)").html(newQuantity); // Update the quantity in the table immediately
+                // Show loader
+                $('#loader').show();
+        
+                $.ajax({
+                  url: '/update_inventory',
+                  type: 'POST',
+                  data: {
+                      inventory_id: itemId,  // Change 'item_id' to 'inventory_id'
+                      quantity: newQuantity
+                  },
+                    success: function(response) {
+                        alert('Inventory updated successfully');
+                        refreshTable(); // Refresh the table after a successful update
+                    },
+                    error: function(error) {
+                        alert('Failed to update inventory');
+                        row.find("td:eq(2)").html(oldQuantity); // If the update fails, revert the quantity in the table
+                    },
+                    complete: function() {
+                        // Hide loader
+                        $('#loader').hide();
+                    }
+                });
+            }
+          });
+    
+          $(document).on('click', '.delete-inventory-btn', function() {
+            var itemId = $(this).data('item-id');
+            var row = $(this).closest('tr');
+    
+            var confirmation = confirm("Are you sure you want to delete this item?");
+            if (confirmation) {
+                // Show loader
+                $('#loader').show();
+    
+                $.ajax({
+                    url: '/delete_inventory',
+                    type: 'POST',
+                    data: {
+                        inventory_id: itemId
+                    },
+                    success: function(response) {
+                        alert('Item deleted successfully');
+                        row.remove();  // Remove the row from the table
+                    },
+                    error: function(error) {
+                        alert('Failed to delete item');
+                    },
+                    complete: function() {
+                        // Hide loader
+                        $('#loader').hide();
+                    }
+                });
+            }
+          });
+    
+          refreshTable();
+        });
+      })();
+    </script>
+    
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('loader').style.display = 'block';
+  });
+
+  window.addEventListener('load', function () {
+    var loader = document.getElementById('loader');
+    loader.style.transition = 'opacity 0.5s';
+    loader.style.opacity = '0';
+    setTimeout(function () {
+      loader.style.display = 'none';
+    }, 500);
+  });
+</script>
+{% endblock content %}

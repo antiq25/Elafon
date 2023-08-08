@@ -1,2 +1,0 @@
-# Elafon
-Elafon Mechanical

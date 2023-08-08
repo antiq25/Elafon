@@ -1,27 +1,62 @@
-<!DOCTYPE html>
-<html>
 
-<head>
-    <link rel="stylesheet" href="../static/css/loginlog.css">
+{% extends 'layout.html' %}
+{% block content %}
+{% block css %}
+<link rel="stylesheet" href="../static/css/loginlog.css">
+{% endblock css %}
 
-</head>
+<div class="center-form">
+  <form class="col-sm-6" action="/signup" method="post">
+    <div class="card">
+      <div class="card-header">Register to Poseidon v2</div>
+      <div class="card-body">
+        <div>
+          <img src="https://i.ibb.co/hRvYMY9/image.png" alt="Image Description">
+         </div>
+        <label for="name" class="form-label">Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          value=""
+          placeholder="Enter Your Name"
+          required/>
+        <div class="mt-2">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            placeholder="Enter Your Password"
+            value=""
+            required/>
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please choose a username.</div>
+        </div>
+        <button type="submit" value="submit" class="btn btn-primary w-100 mt-3">
+          Register
+        </button>
+        <p class="text-center mt-3"> <a href="/login">Go to Login</a></p>
+      </div>
+    </div>
+  </form>
+</div>
+{% include 'loader.html' %}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('loader').style.display = 'block';
+  });
 
-<body>
-    <form action="/signup" method="post">
-        <div class="container">
-            <h3 class="animated-heading3"></h3>
-            <div class="logo-container">
-              <img src="../static/ElafonText.png" alt="Elafon Logo" class="logo">
-            </div>
-            <label for="name">Register</label>
-            <input type="text" id="name" name="name" required>
-            <label for="password"></label>
-            <input type="password" id="password" name="password" required>
-            <input type="submit" value="Signup">
-            <p>Have an account?</p>
-            <div class="shared-bar">
-                <button class="animated-link" onclick="location.href='/login'">Login</button>
-            </div>
-    </form>
-</body>
-</html>
+  window.addEventListener('load', function () {
+    var loader = document.getElementById('loader');
+    loader.style.transition = 'opacity 0.5s';
+    loader.style.opacity = '0';
+    setTimeout(function () {
+        loader.style.display = 'none';
+    }, 1000);
+  });
+</script>
+
+ {% endblock  %}

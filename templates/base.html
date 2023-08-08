@@ -1,26 +1,114 @@
-<!-- base.html -->
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>My Flask Application</title>
-    <img src="../static/elafon.png" alt="Elafon Logo" class="logo25">
-  </head>
-  <body>
-    {% block content %}
-    {% endblock %}
-    
-    {% include 'loader.html' %} <!-- Include the loader -->
-    
-    <script>
-      // Show the loader when the page starts loading
-      document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('loader').style.display = 'flex';
-      });
+<html lang="en">
 
-      // Hide the loader after 2 seconds
-      setTimeout(function () {
-        document.getElementById('loader').style.display = 'none';
-      }, 2000);
-    </script>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Soft UI - Neumorphism Style UI Kit">
+  <meta name="author" content="kingstudio.ro">
+  <link rel="icon" href="{{ url_for('static', filename='images/favicon.png') }}">
+  <title>Soft UI - Neumorphism Style UI Kit</title>
+  <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/v/bs4/dt-1.13.6/r-2.5.0/datatables.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/nouislider.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/animate.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/owl.carousel.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;600;800&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600;800&amp;display=swap" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/fontawesome-all.min.css') }}" rel="stylesheet" type="text/css">
+</head>
+
+<style>
+ 
+  button, .btn-primary {
+    border: none;
+    color: #fff;
+    padding: 8px 8px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 12px;
+    margin: 2px 2px;
+    cursor: pointer;
+  }
+  
+  img {
+    height: 50px;
+    width: 50px;
+  }
+  
+  .dataTables_filter input {
+    width: fit-content; 
+    height: fit-content;
+  }
+</style>
+
+<body>
+  {% block navbar %}
+  <div id="preloader">
+      <div class="preloader">
+          <span></span>
+          <span></span>
+      </div>
+  </div>
+  <div id="top">
+    <a href="/" class="top-logo"><img src="https://i.ibb.co/HX0GQX0/logo.png" alt="">
+    </a>
+    <div class=container-fluid>
+      <section class="lg pb-0" id="basic">
+        <a href="/" class="top-logo"><img src="https://i.ibb.co/HX0GQX0/logo.png" alt="">
+            <nav class="navbar navbar-expand-lg navbar-light has-sticky-logo main-nav fixed-top">
+          <div class="sticky-nav-activate fixed-top"></div>
+          <div class="container">
+            <a class="navbar-brand sticky-logo" href="/"><img src="https://i.ibb.co/HX0GQX0/logo.png" alt=""></a>
+            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-toggle" aria-controls="navbar-toggle" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="icon-bar top-bar"></span>
+              <span class="icon-bar middle-bar"></span>
+              <span class="icon-bar bottom-bar"></span>
+              <span class="sr-only">Toggle navigation</span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar-toggle">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#x" id="dropdown-templates" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-images mr-5 fs-14 va-middle"></i> <span class="va-middle">Poseidon Portal</span></a>
+                  <div class="dropdown-menu mega-menu two-columns" aria-labelledby="dropdown-templates">
+                    <div class="row">
+                      <div class="col-lg-6 sub-menu">
+                        <a class="dropdown-item" href="/"><i class="fas fa-images mr-5"></i> <span>Home</span></a>
+                        <a class="dropdown-item" href="/equipment"><i class="fas fa-th-large mr-5"></i> <span>Return</span></a>
+                        <a class="dropdown-item" href="/testing"><i class="fas fa-briefcase mr-5"></i> <span>Search</span></a>
+                        <a class="dropdown-item" href="/logout"><i class="fas fa-list mr-5"></i> <span>Logout</span></a>
+                      </div>
+                      {% if current_user and current_user.role == 'admin' %}
+                      <div class="col-lg-6 sub-menu">
+                        <a class="dropdown-item" href="/add_item"><i class="fas fa-shopping-cart mr-5"></i> <span>add_item</span></a>
+                        <a class="dropdown-item" href="/manage_technician"s><i class="fas fa-tag mr-5"></i> <span>manage_technicians</span></a>
+                        <a class="dropdown-item" href="/manage_inventory"><i class="fas fa-unlink mr-5"></i> <span>manage_inventory</span></a>
+                      {% endif %}
+                      </div><!-- / sub-menu -->
+                    </div><!-- / row -->
+                </div><!-- / dropdown-menu -->
+            </li><!-- / dropdown -->
+        </ul><!-- / navbar-nav -->
+        </ul>
+    </div><!-- / navbar-collapse -->
+</nav>
+  
+        {% endblock %}
+        <div></div>
+        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/v/bs4/dt-1.13.6/r-2.5.0/datatables.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+        <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/preloader.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/smooth-scroll.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/hide-nav.js') }}"></script>
+        {% block content %}
+        {% endblock %}
+</body>
+
 </html>
