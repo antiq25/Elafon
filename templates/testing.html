@@ -1,11 +1,9 @@
 {% extends 'base.html' %}
-
 {% block content %}
-<div class="container-fluid">   
-  <div id="loader" class="loader" style="display:none">Loading...</div> <!-- Loader element -->
-  <table class="display responsive nowrap" width="100%">
-    <table id="items-table" class="table table-hover">
-      <thead>
+<div id="loader" class="loader" style="display:none">Loading...</div> <!-- Loader element -->
+<table class="responsive no-wrap">
+<table id="items-table" class="table table-hover">
+    <thead>
         <tr>
           <th>Name</th>
           <th>Type</th>
@@ -13,8 +11,6 @@
         </tr>
       </thead>
     </table>
-  </div>
-
   <script>
     (function() {
       $(document).ready(function() {
@@ -32,7 +28,9 @@
               previous: "Previous"
             }
           },
-          processing: true, // Enable the processing indicator
+          responsive: true,
+          processing: true,
+          lengthMenu: [5  , 10, 20]  // This allows only 5, 10, or 20 rows per page
         });
 
         function refreshTable() {
@@ -89,19 +87,4 @@
     })();
   </script>
 </div>
-{% include 'loader.html' %}
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('loader').style.display = 'block';
-  });
-
-  window.addEventListener('load', function () {
-    var loader = document.getElementById('loader');
-    loader.style.transition = 'opacity 0.5s';
-    loader.style.opacity = '0';
-    setTimeout(function () {
-        loader.style.display = 'none';
-    }, 500);
-  });
-</script>
 {% endblock content %}

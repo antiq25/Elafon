@@ -40,7 +40,6 @@ html * {
 }
 
 html {
-  position: relative;
   color: #a6aaba;
   background-color: #171719;
   font-weight: 300;
@@ -445,6 +444,12 @@ pre {
   border-radius: 50%;
   margin-right: 6px;
   box-shadow: 2px 2px 4px #080809, -2px -2px 4px #19191c;
+}
+
+.imgr {
+  width: 50px;
+  height: 50px;
+  margin: auto;
 }
 
 .list-media .info .list-checkbox {

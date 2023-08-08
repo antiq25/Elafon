@@ -1,66 +1,86 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<section class="page-section">
-    <div class="row d-flex justify-content-center">
-        <div class="col-lg-8">
-                <div class="project-post">
-                    <div class="page-content">
-                        <img src="https://i.ibb.co/SvMZJ2T/Elafon-Logo.png" alt="Elafon Logo" class="raised-sm rounded-10 mb-30">
-                        <h4 class="mb-20">Project Description</h4>
-                        {% if tech_signouts %}
-                        <ul class="list-group">
+{{ super() }}
+
+{# Display flash messages #}
+<div class="container mt-4">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-info alert-dismissible fade show rounded" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</div>
+
+<div class="container-fluid mt-4">
+    <div class="card shadow-lg">
+        <div class="card-body">
+            <img class="imgr img-fluid mx-auto d-block p-4" src="https://i.ibb.co/SvMZJ2T/Elafon-Logo.png" alt="">
+
+            {% if tech_signouts %}
+                <ul class="list-group list-group-flush">
+                    {% for signout in tech_signouts %}
+                        {% if signout.item %}
+                            <li class="list-group-item">{{ signout.item.name }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                <form action="{{ url_for('return_item') }}" method="post" class="mt-3">
+                    <div class="form-group">
+                        <label class="label" for="signout_id">Signout ID:</label>
+                        <select id="signout_id" name="signout_id" required class="form-select">
+                            <option value="">Select Item to Return</option>
                             {% for signout in tech_signouts %}
                                 {% if signout.item %}
-                                    <li class="list-group-item">{{ signout.item.name }}</li>
+                                    <option value="{{ signout.id }}">{{ signout.item.name }}</option>
                                 {% endif %}
                             {% endfor %}
-                        </ul>
-                        <form action="{{ url_for('return_item') }}" method="post">
-                            <div class="form-group">
-                                <label class="form-label" for="signout_id">Signout ID:</label>
-                                <select id="signout_id" name="signout_id" required class="form-control">
-                                    <option value="">Select Item to Return</option>
-                                    {% for signout in tech_signouts %}
-                                        {% if signout.item %}
-                                            <option value="{{ signout.id }}">{{ signout.item.name }}</option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Return</button>
-                            </div>
-                        </form>
-                        {% else %}
-                            <div class="explain"> 
-                            <p>No signouts found.</p>
-                            </div>
-                        {% endif %}
+                        </select>
                     </div>
-                </div><!-- / page-content -->
-            </div><!-- / project-post -->
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block shadow-sm">Return</button>
+                    </div>
+                </form>
+            {% else %}
+                <h4 class="card-title text-center">{{ tech.name }}'s profile</h4>
+                <p class="card-text text-center">No signouts found</p>
+            {% endif %}
         </div>
     </div>
-</section>
+</div>
 
-mv
-
+<script>
+    window.setTimeout(function(){
+        var flashMessages = document.getElementsByClassName("flash-message");
+        for (var i = 0; i < flashMessages.length; i++) {
+            var flashMessage = flashMessages[i];
+            flashMessage.style.visibility = "hidden";
+        }
+    }, 5000);
+</script>
 
 {% include 'loader.html' %}
+
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('loader').style.display = 'block';
     });
 
-    window.addEventListener('load', function () {
+    window.addEventListener('load', function() {
         var loader = document.getElementById('loader');
         loader.style.transition = 'opacity 0.5s';
         loader.style.opacity = '0';
-        setTimeout(function () {
+        setTimeout(function() {
             loader.style.display = 'none';
         }, 1000);
     });
 </script>
-{% endblock %}
 
+{% endblock %}

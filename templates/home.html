@@ -2,10 +2,9 @@
 {% block content %}
   {% set items_out = signouts|selectattr('returned', 'equalto', false)|list %}
   {% if items_out|length > 0 %}
-
-  <div class="container-fluid">
-      <table id="items-table" class="table table-striped">
-        <div class="table display responsive no wrap">
+      <div id="loader" class="loader" style="display:none">Loading...</div> <!-- Loader element -->
+      <table class="responsive no-wrap">
+      <table id="items-table" class="table table-hover">
         <thead>
           <tr>
             <th>Name</th>
@@ -32,7 +31,6 @@
           <p style="color: #000; font-family: Arial, sans-serif; font-size: 18px; color: white;">There are no items signed out.</p>
         </div>
       </div>
-    </div>
   {% endif %}
 <script>
 (function() {

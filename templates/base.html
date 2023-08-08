@@ -23,6 +23,24 @@
 </head>
 
 <style>
+
+  body {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #121212 50%, #0f0f0f 75%, #000000 100%);
+    height: 100vh;
+    margin: 0;
+}
+
+  
+td {
+  background-color: #303132;
+  color: #fff;  
+
+}
+  .imgr {
+    width: 200px;
+    height: 200px;
+    
+  }
  
   button, .btn-primary {
     border: none;
@@ -35,10 +53,7 @@
     cursor: pointer;
   }
   
-  img {
-    height: 50px;
-    width: 50px;
-  }
+ 
   
   .dataTables_filter input {
     width: fit-content; 
@@ -54,12 +69,8 @@
           <span></span>
       </div>
   </div>
-  <div id="top">
-    <a href="/" class="top-logo"><img src="https://i.ibb.co/HX0GQX0/logo.png" alt="">
-    </a>
-    <div class=container-fluid>
-      <section class="lg pb-0" id="basic">
-        <a href="/" class="top-logo"><img src="https://i.ibb.co/HX0GQX0/logo.png" alt="">
+  
+        <section class="lg pb-0" id="basic">
             <nav class="navbar navbar-expand-lg navbar-light has-sticky-logo main-nav fixed-top">
           <div class="sticky-nav-activate fixed-top"></div>
           <div class="container">
@@ -85,8 +96,12 @@
                       {% if current_user and current_user.role == 'admin' %}
                       <div class="col-lg-6 sub-menu">
                         <a class="dropdown-item" href="/add_item"><i class="fas fa-shopping-cart mr-5"></i> <span>add_item</span></a>
-                        <a class="dropdown-item" href="/manage_technician"s><i class="fas fa-tag mr-5"></i> <span>manage_technicians</span></a>
+                        <a class="dropdown-item" href="/add_group"><i class="fas fa-shopping-cart mr-5"></i> <span>add_inventory</span></a>
+                        <a class="dropdown-item" href="/manage_technicians"><i class="fas fa-tag mr-5"></i> <span>manage_technicians</span></a>
                         <a class="dropdown-item" href="/manage_inventory"><i class="fas fa-unlink mr-5"></i> <span>manage_inventory</span></a>
+                        <a class="dropdown-item" href="/add_inventory"><i class="fas fa-shopping-cart mr-5"></i> <span>add_inventory</span></a>
+
+
                       {% endif %}
                       </div><!-- / sub-menu -->
                     </div><!-- / row -->
@@ -96,9 +111,13 @@
         </ul>
     </div><!-- / navbar-collapse -->
 </nav>
-  
-        {% endblock %}
-        <div></div>
+{% endblock %}
+
+<!-- Sidebar Column-->
+
+
+<div class="container-fluid"> 
+
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/v/bs4/dt-1.13.6/r-2.5.0/datatables.min.js"></script>
