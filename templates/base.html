@@ -1,33 +1,54 @@
+
+
+
+
 <!doctype html>
 <html lang="en">
-
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!-- Bootstrap CSS -->    
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap-utilities.css">
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap-grid.css">
     <link rel="stylesheet" href="../static/css/fontawesome-all.min.css">
     <link rel="stylesheet" href="../static/css/animate.css">
     <link rel="stylesheet" href="../static/css/magnific-popup.css">
     <link rel="stylesheet" href="../static/css/style.css">
-
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
 
-    <title>Your Flask App</title>
-  
+    <title>aliveai.net</title>
+
     <style>
       html {
-          background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #121212 50%, #0f0f0f 75%, #000000 100%);
+          background-color: var(--bs-gradient);
           background-size: 400% 400%;
       }
 
       .navbar-brand .sticky-logo {
-        width: 40px;
-        height: 40px;
+        
+        
+      }
+
+
+      .dropdown-item:hover .sub-menu {
+        color: #fff;  
+      }
+
+      .dropdown-item:hover {
+        color: #fff;
+      } 
+
+      .navbar-collapse .collapse .show {
+        background-color: white;
+
+      }
+      
+      .navbar-expand-lg .navbar-collapse {
+        border-radius: .2rem ;
       }
 
       .col-lg-1 .sub-menu {
@@ -39,8 +60,46 @@
       width: 150px;
       height: 150px;
     }
+
+    .btn {
+      padding: 5px;
+      margin: 5px;
+    
+    }
+
+    .btn-primary {
+      color: white !important;
+    }
+    
+
+
+    .table > :not(caption) > * > * {
+    background-color: var(--bs-gradient); 
+    color: #fff;
+
+  }
+
+  a {
+    color: #fff;
+  }
+
+  @media only screen and (max-width: 991px) {
+    .navbar-expand-lg .navbar-collapse {
+        background-color: black;
+
+    }
+
+    .dropdown-menu.show:hover  {
+       color: black;
+
+    }
+}
+
+
     </style>
+
 </head>
+
 <body>
   {% block navbar %}
   <div id="preloader">
@@ -49,11 +108,10 @@
           <span></span>
       </div>
   </div>
-  
         <section class="lg" id="basic">
-            <nav class="navbar navbar-expand-lg navbar-light has-sticky-logo main-nav bg-gradient fixed-top w-100">
+            <nav class="navbar navbar-expand-lg navbar-light has-sticky-logo main-nav bg-gradient fixed-top">
           <div class="sticky-nav-activate fixed-top"></div>
-          <div class="container">
+          <div class="container-fluid">
             <a class="navbar-brand sticky-logo" href="/"><img src="https://i.ibb.co/HX0GQX0/logo.png" alt=""></a>
             <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-toggle" aria-controls="navbar-toggle" aria-expanded="false" aria-label="Toggle navigation">
               <span class="icon-bar top-bar"></span>
@@ -64,22 +122,22 @@
             <div class="collapse navbar-collapse" id="navbar-toggle">
               <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#x" id="dropdown-templates" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-images mr-5 fs-14 va-middle"></i> <span class="va-middle">Poseidon Portal</span></a>
+                  <a class="nav-link dropdown-toggle" href="#x" id="dropdown-templates" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-robot mr-5 fs-10 va-middle"></i> <span class="va-middle">aliveai.net</span></a>
                   <div class="dropdown-menu" aria-labelledby="dropdown-templates">
                     <div class="grid">
                       <div class="col-lg-1 sub-menu">
-                        <a class="dropdown-item" href="/"><i class="fas fa-images mr-5"></i> <span>Home</span></a>
-                        <a class="dropdown-item" href="/equipment"><i class="fas fa-th-large mr-5"></i> <span>Return</span></a>
-                        <a class="dropdown-item" href="/testing"><i class="fas fa-briefcase mr-5"></i> <span>Search</span></a>
-                        <a class="dropdown-item" href="/logout"><i class="fas fa-list mr-5"></i> <span>Logout</span></a>
+                        <a class="dropdown-item" href="/"><i class="fas fa-home mr-5"></i> <span>Home</span></a>
+                        <a class="dropdown-item" href="/equipment"><i class="fas fa-backward mr-5"></i> <span>Return</span></a>
+                        <a class="dropdown-item" href="/testing"><i class="fas fa-search mr-5"></i> <span>Search</span></a>
+                        <a class="dropdown-item" href="/logout"><i class="fas fa-stop mr-5"></i> <span>Logout</span></a>
                       </div>
                       {% if current_user and current_user.role == 'admin' %}
                       <div class="col-lg-1 sub-menu">
-                        <a class="dropdown-item" href="/add_item"><i class="fas fa-shopping-cart mr-5"></i> <span>Add Items</span></a>
-                        <a class="dropdown-item" href="/add_group"><i class="fas fa-shopping-cart mr-5"></i> <span>Add Item Group</span></a>
-                        <a class="dropdown-item" href="/add_inventory"><i class="fas fa-shopping-cart mr-5"></i> <span>Add Inventory Item</span></a>
-                        <a class="dropdown-item" href="/manage_technicians"><i class="fas fa-tag mr-5"></i> <span>Manage Users</span></a>
-                        <a class="dropdown-item" href="/manage_inventory"><i class="fas fa-unlink mr-5"></i> <span>Manage Inventory</span></a>
+                        <a class="dropdown-item" href="/add_item"><i class="fas fa-edit mr-5"></i> <span>Add Items</span></a>
+                        <a class="dropdown-item" href="/add_group"><i class="fas fa-edit mr-5"></i> <span>Add Item Group</span></a>
+                        <a class="dropdown-item" href="/add_inventory"><i class="fas fa-edit mr-5"></i> <span>Add Inventory Item</span></a>
+                        <a class="dropdown-item" href="/manage_technicians"><i class="fas fa-edit mr-5"></i> <span>Manage Users</span></a>
+                        <a class="dropdown-item" href="/manage_inventory"><i class="fas fa-edit mr-5"></i> <span>Manage Inventory</span></a>
                       {% endif %}
                       </div><!-- / sub-menu -->
                     </div><!-- / row -->
@@ -92,7 +150,6 @@
 {% endblock %}
 
     <!-- JavaScript Libraries -->
-
     <!-- DataTables JS -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -102,8 +159,8 @@
     <script src="{{ url_for('static', filename='js/smooth-scroll.js') }}"></script>
     <script src="{{ url_for('static', filename='js/hide-nav.js') }}"></script>
     <div class="container-fluid">
-      {% block content %}
-      {% endblock %}
+    {% block content %}
+    {% endblock %}
 
 </body>
 

@@ -10867,13 +10867,13 @@ body .no-shadow, body .no-shadow:hover, body .no-shadow:active, body .no-shadow:
     margin-left: 0;
   }
   .navbar-expand-lg.navbar-light.bg-transparent .navbar-collapse {
-    background-color: #fff !important;
+    background-color: #000 !important;
   }
   .navbar-expand-lg.navbar-inverse.bg-transparent .navbar-collapse {
     background-color: #000 !important;
   }
   .navbar-expand-lg .dropdown-menu {
-    background-color: transparent;
+    background-color: #000;
   }
   .navbar-expand-lg .dropdown-menu.show {
     display: block;
