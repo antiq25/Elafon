@@ -1,16 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
-<div id="loader" class="loader" style="display:none">Loading...</div> <!-- Loader element -->
-<table class="responsive no-wrap">
-<table id="items-table" class="table table-hover">
-    <thead>
+<div id="loader" class="loader" style="display:none">Loading...</div>
+<table class="display responsive table-hover">
+  <table id="items-table" class="table table-hover">
+      <thead>
         <tr>
           <th>Name</th>
           <th>Type</th>
           <th>Action</th>
         </tr>
       </thead>
+      <!-- Table body content goes here -->
     </table>
+  </div>
+</div>
   <script>
     (function() {
       $(document).ready(function() {
@@ -30,9 +33,12 @@
           },
           responsive: true,
           processing: true,
-          lengthMenu: [5  , 10, 20]  // This allows only 5, 10, or 20 rows per page
+          lengthMenu: [5  , 10, 20],
+          columnDefs: [
+              { responsivePriority: 1, targets: 0 }, // Makes the first column (index 0) the highest priority to keep visible
+              { responsivePriority: 2, targets: 1 }   // This allows only 5, 10, or 20 rows per page
+          ]
         });
-
         function refreshTable() {
           $('#loader').show(); // Show the loader
           $.getJSON('/get_equipment', function(data) {
@@ -86,5 +92,4 @@
       });
     })();
   </script>
-</div>
 {% endblock content %}

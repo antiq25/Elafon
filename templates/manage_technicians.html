@@ -3,6 +3,9 @@
 {% block content %}
 
 {{ super() }}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 {# Display flash messages #}
 <div class="container mt-4">
@@ -21,13 +24,41 @@
 </div>
 
 <div class="container">
-    <h1 class="dashboard-heading">Admin Dashboard</h1>
     <div class="row">
-        <!-- Create Technician Card -->
+        <!-- Create Technician Button -->
         <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h2>Create Technician</h2>
+            <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#createTechnicianModal">Create Technician</button>
+        </div>
+        <!-- Delete Technician Button -->
+        <div class="col-md-6">
+            <button type="button" class="btn btn-danger mb-3" data-toggle="modal" data-target="#deleteTechnicianModal">Delete Technician</button>
+        </div>
+        <!-- Wipe Sign-Outs Button -->
+        <div class="col-md-6">
+            <button type="button" class="btn btn-warning mb-3" data-toggle="modal" data-target="#wipeSignOutsModal">Wipe Sign-Outs</button>
+        </div>
+        <!-- Make Admin Button -->
+        <div class="col-md-6">
+            <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#makeAdminModal">Make Admin</button>
+        </div>
+        <!-- Restore All Sign-Outs Button -->
+        <div class="col-md-12">
+            <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#restoreAllSignOutsModal">Restore All Sign-Outs</button>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    {# Create Technician Modal #}
+    <div class="modal fade" id="createTechnicianModal" tabindex="-1" aria-labelledby="createTechnicianModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createTechnicianModalLabel">Create Technician</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
                     <form method="POST" action="{{ url_for('manage_technicians') }}">
                         <input type="hidden" name="action" value="create">
                         <div class="mb-3">
@@ -43,89 +74,116 @@
                 </div>
             </div>
         </div>
-        <!-- Delete Technician Card -->
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h2>Delete Technician</h2>
-                    <form method="POST" action="{{ url_for('manage_technicians') }}">
-                        <input type="hidden" name="action" value="delete">
-                        <div class="mb-3">
-                            <label for="technician_id" class="form-label">Technician:</label>
-                            <select name="technician_id" class="form-select" required>
-                                {% for technician in technicians %}
-                                {% if technician.id != session['tech_id'] %}
-                                <option value="{{ technician.id }}">{{ technician.name }}</option>
-                                {% endif %}
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-danger">Delete Technician</button>
-                    </form>
-                </div>
+    </div>
+{# Delete Technician Modal #}
+<div class="modal fade" id="deleteTechnicianModal" tabindex="-1" aria-labelledby="deleteTechnicianModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteTechnicianModalLabel">Delete Technician</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{{ url_for('manage_technicians') }}">
+                    <input type="hidden" name="action" value="delete">
+                    <div class="mb-3">
+                        <label for="technician_id" class="form-label">Technician:</label>
+                        <select name="technician_id" class="form-select" required>
+                            {% for technician in technicians %}
+                            {% if technician.id != session['tech_id'] %}
+                            <option value="{{ technician.id }}">{{ technician.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-danger">Delete Technician</button>
+                </form>
             </div>
         </div>
     </div>
-    <!-- Wipe Sign-Outs and Make Admin Cards -->
-    <div class="row mt-3">
-        <!-- Wipe Sign-Outs Card -->
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h2>Wipe Sign-Outs</h2>
-                    <form method="POST" action="{{ url_for('manage_technicians') }}">
-                        <input type="hidden" name="action" value="wipe_signouts">
-                        <div class="mb-3">
-                            <label for="technician_id" class="form-label">Technician:</label>
-                            <select name="technician_id" class="form-select" required>
-                                {% for technician in technicians %}
-                                {% if technician.signouts|length > 0 %}
-                                <option value="{{ technician.id }}">{{ technician.name }}</option>
-                                {% endif %}
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-warning">Wipe Sign-Outs</button>
-                    </form>
-                </div>
+</div>
+
+{# Wipe Sign-Outs Modal #}
+<div class="modal fade" id="wipeSignOutsModal" tabindex="-1" aria-labelledby="wipeSignOutsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="wipeSignOutsModalLabel">Wipe Sign-Outs</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
             </div>
-        </div>
-        <!-- Make Admin Card -->
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h2>Make Admin</h2>
-                    <form method="POST" action="{{ url_for('manage_technicians') }}">
-                        <input type="hidden" name="action" value="make_admin">
-                        <div class="mb-3">
-                            <label for="technician_id" class="form-label">Technician:</label>
-                            <select name="technician_id" class="form-select" required>
-                                {% for technician in technicians %}
-                                {% if technician.role != 'admin' %}
-                                <option value="{{ technician.id }}">{{ technician.name }}</option>
-                                {% endif %}
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Make Admin</button>
-                    </form>
-                </div>
+            <div class="modal-body">
+                <form method="POST" action="{{ url_for('manage_technicians') }}">
+                    <input type="hidden" name="action" value="wipe_signouts">
+                    <div class="mb-3">
+                        <label for="technician_id" class="form-label">Technician:</label>
+                        <select name="technician_id" class="form-select" required>
+                            {% for technician in technicians %}
+                            {% if technician.signouts|length > 0 %}
+                            <option value="{{ technician.id }}">{{ technician.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-warning">Wipe Sign-Outs</button>
+                </form>
             </div>
         </div>
     </div>
-    <!-- Restore All Sign-Outs Card -->
-    <div class="row mt-3">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <h2>Restore All Sign-Outs</h2>
-                    <form method="POST" action="{{ url_for('manage_technicians') }}">
-                        <input type="hidden" name="action" value="restore_all_signouts">
-                        <button type="submit" class="btn btn-success">Restore All Sign-Outs</button>
-                    </form>
-                </div>
+</div>
+
+{# Make Admin Modal #}
+<div class="modal fade" id="makeAdminModal" tabindex="-1" aria-labelledby="makeAdminModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="makeAdminModalLabel">Make Admin</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{{ url_for('manage_technicians') }}">
+                    <input type="hidden" name="action" value="make_admin">
+                    <div class="mb-3">
+                        <label for="technician_id" class="form-label">Technician:</label>
+                        <select name="technician_id" class="form-select" required>
+                            {% for technician in technicians %}
+                            {% if technician.role != 'admin' %}
+                            <option value="{{ technician.id }}">{{ technician.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Make Admin</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
+
+{# Restore All Sign-Outs Modal #}
+<div class="modal fade" id="restoreAllSignOutsModal" tabindex="-1" aria-labelledby="restoreAllSignOutsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="restoreAllSignOutsModalLabel">Restore All Sign-Outs</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{{ url_for('manage_technicians') }}">
+                    <input type="hidden" name="action" value="restore_all_signouts">
+                    <button type="submit" class="btn btn-success">Restore All Sign-Outs</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 </div>
 {% endblock %}
