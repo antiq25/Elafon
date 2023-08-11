@@ -19,11 +19,13 @@
 </head>
 
 <body>
-    <preloader>
-        <div class="loader">
+    <div id="preloader">
+        <div class="preloader">
             <span></span>
             <span></span>
         </div>
+    </div>
+        {% block navbar %}
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-gradient">
           <div class="container-fluid">
@@ -46,7 +48,6 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownId">
-                            {% if current_user and current_user.role == 'admin' %}
                             <a class="dropdown-item" href="/add_item"><i class="fas fa-edit mr-5"></i> <span>Add Items</span></a>
                             <a class="dropdown-item" href="/add_group"><i class="fas fa-edit mr-5"></i> <span>Add Item Group</span></a>
                             <a class="dropdown-item" href="/add_inventory"><i class="fas fa-edit mr-5"></i> <span>Add Inventory Item</span></a>
@@ -54,14 +55,13 @@
                             <a class="dropdown-item" href="/manage_inventory"><i class="fas fa-edit mr-5"></i> <span>Manage Inventory</span></a>
                           {% endif %}
                         </div>
-                    {% endif %}
                     </li>
                 </ul>
             <a class="nav-link"  aria-disabled="false" href="/logout">Logout</a>
-            
             </div>
       </div>
     </nav>
+    {% endblock navbar %}
     
 
 
@@ -73,7 +73,7 @@
     <script src="../static/js/smooth-scroll.js"></script>
     <script src="../static/js/preloader.js"></script>
     <script src="../static/js/hide-nav.js"></script>
-
+        <div class="container-fluid">
         {% block content %}
         {% endblock %}
     </div>
