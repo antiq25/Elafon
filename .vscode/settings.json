@@ -5,5 +5,6 @@
     "python.formatting.provider": "none",
     "liveServer.settings.port": 5501,
     "CodeGPT.maxTokens": 10000,
-    "CodeGPT.model": "gpt-3.5-turbo-16k"
+    "CodeGPT.model": "gpt-3.5-turbo-16k",
+    "cSpell.showAutocompleteSuggestions": true
 }

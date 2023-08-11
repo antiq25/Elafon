@@ -171,7 +171,7 @@ def equipment():
     items = Item.query.filter_by(is_signed_out=False).all()
     tech_signouts = Signout.query.filter_by(technician_id=tech_id, returned=False).all()
 
-    return render_template('equipment.html', tech=tech, items=items, tech_signouts=tech_signouts)
+    return render_template('testing.html', tech=tech, items=items, tech_signouts=tech_signouts)
 
 
 @app.route('/get_equipment', methods=['GET'])
@@ -197,6 +197,16 @@ def add_group():
             return redirect(url_for('error_page', error_msg='The group already exists.'))
         return redirect(url_for('add_group'))
     return render_template('add_group.html')
+
+@app.route('/flash')
+def flash_route():
+    return render_template('flash.html')
+
+@app.route('/test_flash')
+def test_flash():
+    flash('This is a test flash message', 'info')
+    return render_template('testing.html')  # or another template where you display flash messages
+
 
 @app.route('/add_item', methods=['GET', 'POST'])
 @login_required
@@ -288,13 +298,25 @@ def return_item():
         db.session.rollback()
         return redirect(url_for('error_page', error_msg=f"An error occurred while returning the item: {str(e)}"))
 
-    return redirect(url_for('equipment'))
+    return redirect(url_for('show_return_item'))  # Redirect to the return_item page after processing.
 
-#Handles signing out , using datatables and jquery
-@app.route('/testing')
-@login_required #this actually handles the < -- signing out processes  -- >
-def ui():
-    return render_template('testing.html')
+
+@app.route('/return_item', methods=['GET'])
+@login_required
+def show_return_item():
+    tech_id = session.get('tech_id')
+    tech = Technician.query.get(tech_id)
+
+    if tech is None:
+        return redirect(url_for('error_page', error_msg='No tech found with the current tech_id'))
+
+    # Retrieve the signouts for the technician that haven't been returned
+    tech_signouts = Signout.query.filter_by(technician_id=tech_id, returned=False).all()
+
+    return render_template('return_item.html', tech=tech, tech_signouts=tech_signouts)
+
+
+
 
 
 @app.route('/layout')

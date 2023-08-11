@@ -1,10 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
-{% include 'flash.html' %}
 
 {{ super() }}
 
-
+{# Display flash messages #}
+<div class="main-wrapper">
+       <div class="card shadow-lg">
+        <div class="card-body">
+            <div class="flash-message">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-info alert-dismissible fade show rounded" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</div>
 
             <img class="imgr img-fluid mx-auto d-block p-4" src="https://i.ibb.co/SvMZJ2T/Elafon-Logo.png" alt="">
             {% if tech_signouts %}
@@ -38,6 +54,16 @@
         </div>
     </div>
 </div>
+
+<script>
+    window.setTimeout(function(){
+        var flashMessages = document.getElementsByClassName("flash-message");
+        for (var i = 0; i < flashMessages.length; i++) {
+            var flashMessage = flashMessages[i];
+            flashMessage.style.visibility = "hidden";
+        }
+    }, 5000);
+</script>
 
 {% include 'loader.html' %}
 

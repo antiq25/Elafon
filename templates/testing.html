@@ -1,95 +1,85 @@
-{% extends 'base.html' %}
-{% block content %}
-{% include 'loader.html' %}
-<table class="display responsive nowrap" width="100%">
-  <table id="items-table" class="table table-hover">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <!-- Table body content goes here -->
+  {% extends 'base.html' %}
+  
+  {% block content %}
+  {% include 'loader.html' %}
+  <div id="flashes">{% include 'flash.html' %}</div>
+  <table class="display responsive nowrap" width="100%">
+    <table id="items-table" class="table table-hover">
+        <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <!-- Table body content goes here -->
     </table>
   </div>
-</div>
   <script>
-    (function() {
-      $(document).ready(function() {
-        var itemsTable = $('#items-table').DataTable({
-          language: {
-            search: "Filter items:",
-            lengthMenu: "Show _MENU_ items per page",
-            info: "Showing _START_ to _END_ of _TOTAL_ items",
-            infoEmpty: "No items available",
-            infoFiltered: "(filtered from _MAX_ total items)",
-            paginate: {
-              first: "First",
-              last: "Last",
-              next: "Next",
-              previous: "Previous"
-            }
-          },
-          responsive: true,
-          processing: true,
-          lengthMenu: [5  , 10, 20],
-          columnDefs: [
-              { responsivePriority: 1, targets: 0 }, // Makes the first column (index 0) the highest priority to keep visible
-              { responsivePriority: 2, targets: 1 }   // This allows only 5, 10, or 20 rows per page
-          ]
-        });
-        function refreshTable() {
-          $('#loader').show(); // Show the loader
-          $.getJSON('/get_equipment', function(data) {
+    $(document).ready(function() {
+      var itemsTable = $('#items-table').DataTable({
+        language: {
+          search: "Filter items:",
+          lengthMenu: "Show _MENU_ items per page",
+          info: "Showing _START_ to _END_ of _TOTAL_ items",
+          infoEmpty: "No items available",
+          infoFiltered: "(filtered from _MAX_ total items)",
+          paginate: {
+            first: "First",
+            last: "Last",
+            next: "Next",
+            previous: "Previous"
+          }
+        },
+        responsive: true,
+        processing: true,
+        lengthMenu: [5, 10, 20],
+        columnDefs: [
+          { responsivePriority: 1, targets: 0 },
+          { responsivePriority: 2, targets: 1 }
+        ]
+      });
+
+
+      function refreshTable() {
+        $('#loader').show();
+        $.getJSON('/get_equipment')
+        .done(function(data) {
             if (Array.isArray(data)) {
-              itemsTable.clear();
-              data.forEach(function(item) {
-                var btnMarkup = '<button data-item-id="' + item.id + 
-                                '" class="btn btn-primary signout-item-btn">Sign out</button>';
-                itemsTable.row.add([
-                  item.name,
-                  item.type,
-                  btnMarkup
-                ]);
-              });
-              itemsTable.draw();
-            } else {
-              console.log(data.message);
+                itemsTable.clear();
+                data.forEach(function(item) {
+                    var btnMarkup = `
+                        <form method="POST" action="/equipment">
+                            <input type="hidden" name="item_id" value="${item.id}">
+                            <button type="submit" class="btn btn-primary">Sign out</button>
+                        </form>
+                    `;
+                    itemsTable.row.add([
+                        item.name,
+                        item.type,
+                        btnMarkup
+                    ]);
+                });
+                itemsTable.draw();
             }
-            $('#loader').hide(); // Hide the loader
-          });
-        }
-
-        $(document).on('click', '.signout-item-btn', function() {
-          var itemId = $(this).data('item-id');
-          var row = $(this).closest('tr');
-      
-          // Show loader
-          $('.loader').show();
-      
-          $.ajax({
-              url: '/equipment',
-              type: 'POST',
-              data: {
-                  item_id: itemId
-              },
-              success: function(response) {
-                  alert('Item signed out successfully');
-                  row.remove();
-              },
-              error: function(error) {
-                  alert('Failed to sign out item');
-              },
-              complete: function() {
-                  // Hide loader
-                  $('.loader').hide();
-              }
-          });
+            $('#loader').hide();
+        })
+        .fail(function() {
+            alert('Failed to fetch equipment. Please try again.');
+            $('#loader').hide();
+        });
+      }
+  
+      $(document).ajaxComplete(function() {
+          // Handle flash messages after every AJAX request
+          setTimeout(function() {
+              $('#flashes').fadeOut('slow', function() {
+                  $('#flashes').empty().show();
+              });
+          }, 5000); 
       });
-
-        refreshTable();
-      });
-    })();
+  
+      refreshTable();
+    });
   </script>
-{% endblock content %}
+  {% endblock content %}

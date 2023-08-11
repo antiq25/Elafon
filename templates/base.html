@@ -1,166 +1,82 @@
-
-
-
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS -->    
-    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap-utilities.css">
-    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap-grid.css">
-    <link rel="stylesheet" href="../static/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
     <link rel="stylesheet" href="../static/css/animate.css">
     <link rel="stylesheet" href="../static/css/magnific-popup.css">
+    <link rel="stylesheet" href="../static/css/fontawesome-all.min.css">
     <link rel="stylesheet" href="../static/css/style.css">
-    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="../static/css/antiq.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
 
     <title>aliveai.net</title>
 
-    <style>
-      html {
-          background-color: var(--bs-gradient);
-          background-size: 400% 400%;
-      }
-
-      .navbar-brand .sticky-logo {
-        
-        
-      }
-
-
-      .dropdown-item:hover .sub-menu {
-        color: #fff;  
-      }
-
-      .dropdown-item:hover {
-        color: #fff;
-      } 
-
-      .navbar-collapse .collapse .show {
-        background-color: white;
-
-      }
-      
-      .navbar-expand-lg .navbar-collapse {
-        border-radius: .2rem ;
-      }
-
-      .col-lg-1 .sub-menu {
-        color: #000;
-        font-weight: bold!important;
-      }
-
-    .imgr {
-      width: 150px;
-      height: 150px;
-    }
-
-    .btn {
-      padding: 5px;
-      margin: 5px;
-    
-    }
-
-    .btn-primary {
-      color: white !important;
-    }
-    
-
-
-    .table > :not(caption) > * > * {
-    background-color: var(--bs-gradient); 
-    color: #fff;
-
-  }
-
-  a {
-    color: #fff;
-  }
-
-  @media only screen and (max-width: 991px) {
-    .navbar-expand-lg .navbar-collapse {
-        background-color: black;
-
-    }
-
-    .dropdown-menu.show:hover  {
-       color: black;
-
-    }
-}
-
-
-    </style>
-
+    <!-- DataTables CSS -->
 </head>
 
 <body>
-  {% block navbar %}
-  <div id="preloader">
-      <div class="preloader">
-          <span></span>
-          <span></span>
-      </div>
-  </div>
-        <section class="lg" id="basic">
-            <nav class="navbar navbar-expand-lg navbar-light has-sticky-logo main-nav bg-gradient fixed-top w-100">
-          <div class="sticky-nav-activate fixed-top"></div>
-          <div class="container-fluid">
-            <a class="navbar-brand sticky-logo" href="/"><img src="https://i.ibb.co/HX0GQX0/logo.png" alt=""></a>
-            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-toggle" aria-controls="navbar-toggle" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="icon-bar top-bar"></span>
-              <span class="icon-bar middle-bar"></span>
-              <span class="icon-bar bottom-bar"></span>
-              <span class="sr-only">Toggle navigation</span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbar-toggle">
-              <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#x" id="dropdown-templates" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-robot mr-5 fs-10 va-middle"></i> <span class="va-middle">aliveai.net</span></a>
-                  <div class="dropdown-menu" aria-labelledby="dropdown-templates">
-                    <div class="grid">
-                      <div class="col-lg-1 sub-menu">
-                        <a class="dropdown-item" href="/"><i class="fas fa-home mr-5"></i> <span>Home</span></a>
-                        <a class="dropdown-item" href="/equipment"><i class="fas fa-backward mr-5"></i> <span>Return</span></a>
-                        <a class="dropdown-item" href="/testing"><i class="fas fa-search mr-5"></i> <span>Search</span></a>
-                        <a class="dropdown-item" href="/logout"><i class="fas fa-stop mr-5"></i> <span>Logout</span></a>
-                      </div>
-                      {% if current_user and current_user.role == 'admin' %}
-                      <div class="col-lg-1 sub-menu">
-                        <a class="dropdown-item" href="/add_item"><i class="fas fa-edit mr-5"></i> <span>Add Items</span></a>
-                        <a class="dropdown-item" href="/add_group"><i class="fas fa-edit mr-5"></i> <span>Add Item Group</span></a>
-                        <a class="dropdown-item" href="/add_inventory"><i class="fas fa-edit mr-5"></i> <span>Add Inventory Item</span></a>
-                        <a class="dropdown-item" href="/manage_technicians"><i class="fas fa-edit mr-5"></i> <span>Manage Users</span></a>
-                        <a class="dropdown-item" href="/manage_inventory"><i class="fas fa-edit mr-5"></i> <span>Manage Inventory</span></a>
-                      {% endif %}
-                      </div><!-- / sub-menu -->
-                    </div><!-- / row -->
-                </div><!-- / dropdown-menu -->
-            </li><!-- / dropdown -->
-        </ul><!-- / navbar-nav -->
-        </ul>
-    </div><!-- / navbar-collapse -->
-</nav>
-{% endblock %}
+    <preloader>
+        <div class="loader">
+            <span></span>
+            <span></span>
+        </div>
 
-    <!-- JavaScript Libraries -->
-    <!-- DataTables JS -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gradient">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#">Elafon</a>
+            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavId">
+                <ul class="navbar-nav me-auto mt-5 mt-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/" aria-current="page">Home <span class="visually-hidden">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/return_item">Return</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/equipment">Search</a>
+                    </li>
+                    {% if current_user and current_user.role == 'admin' %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownId">
+                            {% if current_user and current_user.role == 'admin' %}
+                            <a class="dropdown-item" href="/add_item"><i class="fas fa-edit mr-5"></i> <span>Add Items</span></a>
+                            <a class="dropdown-item" href="/add_group"><i class="fas fa-edit mr-5"></i> <span>Add Item Group</span></a>
+                            <a class="dropdown-item" href="/add_inventory"><i class="fas fa-edit mr-5"></i> <span>Add Inventory Item</span></a>
+                            <a class="dropdown-item" href="/manage_technicians"><i class="fas fa-edit mr-5"></i> <span>Manage Users</span></a>
+                            <a class="dropdown-item" href="/manage_inventory"><i class="fas fa-edit mr-5"></i> <span>Manage Inventory</span></a>
+                          {% endif %}
+                        </div>
+                    {% endif %}
+                    </li>
+                </ul>
+            <a class="nav-link"  aria-disabled="false" href="/logout">Logout</a>
+            
+            </div>
+      </div>
+    </nav>
+    
+
+
+
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-    <script src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../static/js/jquery.easing.min.js"></script>
+    <script src="../static/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="{{ url_for('static', filename='js/preloader.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/smooth-scroll.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/hide-nav.js') }}"></script>
-    <div class="container-fluid">
-    {% block content %}
-    {% endblock %}
+    <script src="../static/js/jquery.magnific-popup.min.js"></script>
+    <script src="../static/js/smooth-scroll.js"></script>
+    <script src="../static/js/preloader.js"></script>
+    <script src="../static/js/hide-nav.js"></script>
+
+        {% block content %}
+        {% endblock %}
+    </div>
 
 </body>
 
