@@ -25,45 +25,46 @@
             <span></span>
         </div>
     </div>
-        {% block navbar %}
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-gradient">
-          <div class="container-fluid">
-            <a class="navbar-brand" href="#">Elafon</a>
-            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="collapsibleNavId">
-                <ul class="navbar-nav me-auto mt-5 mt-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/" aria-current="page">Home <span class="visually-hidden">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/return_item">Return</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/equipment">Search</a>
-                    </li>
-                    {% if current_user and current_user.role == 'admin' %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownId">
-                            <a class="dropdown-item" href="/add_item"><i class="fas fa-edit mr-5"></i> <span>Add Items</span></a>
-                            <a class="dropdown-item" href="/add_group"><i class="fas fa-edit mr-5"></i> <span>Add Item Group</span></a>
-                            <a class="dropdown-item" href="/add_inventory"><i class="fas fa-edit mr-5"></i> <span>Add Inventory Item</span></a>
-                            <a class="dropdown-item" href="/manage_technicians"><i class="fas fa-edit mr-5"></i> <span>Manage Users</span></a>
-                            <a class="dropdown-item" href="/manage_inventory"><i class="fas fa-edit mr-5"></i> <span>Manage Inventory</span></a>
-                          {% endif %}
-                        </div>
-                    </li>
+    {% block navbar %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">Elafon</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/return_item">Returns</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/equipment">Equipment</a>
+              </li>
+              {% if current_user and current_user.role == 'admin' %}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                 Admin
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="/manage_technicians">Techicians</a></li>
+                  <li><a class="dropdown-item" href="/manage_inventory">Inventory</a></li>
+                  <li><a class="dropdown-item" href="/add_group">Create Group</a></li>
+                  <li><a class="dropdown-item" href="/add_item">Create Item</a></li>
+                  <li><a class="dropdown-item" href="/add_inventory">Create Inventory</a></li>
                 </ul>
-            <a class="nav-link"  aria-disabled="false" href="/logout">Logout</a>
-            </div>
-      </div>
-    </nav>
-    {% endblock navbar %}
-    
-
+              </li>
+              {% endif %}
+              <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      {% endblock navbar %}
 
 
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
@@ -77,7 +78,6 @@
         {% block content %}
         {% endblock %}
     </div>
-
 </body>
 
 </html>

@@ -5,7 +5,6 @@
 {{ super() }}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-{# this is just for the modal havent got it to work with bs5 yet #}
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 {# Display flash messages #}
@@ -23,30 +22,14 @@
     {% endwith %}
 </div>
 
-<div class="container">
-    <div class="row">
-        <!-- Create Technician Button -->
-        <div class="col-md-6">
-            <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#createTechnicianModal">Create Technician</button>
-        </div>
-        <!-- Delete Technician Button -->
-        <div class="col-md-6">
-            <button type="button" class="btn btn-danger mb-3" data-toggle="modal" data-target="#deleteTechnicianModal">Delete Technician</button>
-        </div>
-        <!-- Wipe Sign-Outs Button -->
-        <div class="col-md-6">
-            <button type="button" class="btn btn-warning mb-3" data-toggle="modal" data-target="#wipeSignOutsModal">Wipe Sign-Outs</button>
-        </div>
-        <!-- Make Admin Button -->
-        <div class="col-md-6">
-            <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#makeAdminModal">Make Admin</button>
-        </div>
-        <!-- Restore All Sign-Outs Button -->
-        <div class="col-md-12">
-            <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#restoreAllSignOutsModal">Restore All Sign-Outs</button>
-        </div>
-    </div>
-
+<div class="container-fluid"></div>
+          <h5 class="display-4 text-center text-primary mb-5">Create Items</h1>
+<div class="row justify-content-center align-items-center g-2">
+    <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#createTechnicianModal">Create Technician</button>
+    <button type="button" class="btn btn-danger mb-3" data-toggle="modal" data-target="#deleteTechnicianModal">Delete Technician</button>
+    <button type="button" class="btn btn-warning mb-3" data-toggle="modal" data-target="#wipeSignOutsModal">Wipe Sign-Outs</button>
+    <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#makeAdminModal">Make Admin</button>
+    <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#restoreAllSignOutsModal">Restore All Sign-Outs</button>    
     <!-- Modals -->
     {# Create Technician Modal #}
     <div class="modal fade" id="createTechnicianModal" tabindex="-1" aria-labelledby="createTechnicianModalLabel" aria-hidden="true">

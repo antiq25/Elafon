@@ -992,7 +992,6 @@ form label {
   margin-bottom: 20px;
   border: none;
   border-radius: 10px;
-  box-shadow: 6px 6px 12px #080809, -6px -6px 12px #19191c;
 }
 
 .alert-dismissible .btn-close {
@@ -1542,13 +1541,11 @@ body .btn-xs.btn-icon, body .btn-xs.btn-icon:hover {
 
 /*--- button colors ---*/
 .btn-primary, .btn-primary:focus, .btn-primary.active {
-  color: #4853c1 !important;
   background-color: #121213 !important;
   border-color: #121213 !important;
 }
 
 .btn-primary:hover, .btn-primary:active, .show > .btn-primary.dropdown-toggle {
-  color: #4853c1 !important;
   background-color: #121213 !important;
   border-color: #121213 !important;
 }

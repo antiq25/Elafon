@@ -1,13 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
 {% include 'flash.html' %}
-
-{{ super() }}
-
-
-
-            <img class="imgr img-fluid mx-auto d-block p-4" src="https://i.ibb.co/SvMZJ2T/Elafon-Logo.png" alt="">
-            {% if tech_signouts %}
+<div class="container-fluid"></div>
+        <div class="mt-5 glass p-4">
+          <h5 class="display-4 text-center text-primary mb-5">Return Equipment</h1>
+                 {% if tech_signouts %}
                 <ul class="list-group list-group-flush">
                     {% for signout in tech_signouts %}
                         {% if signout.item %}
