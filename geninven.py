@@ -11,14 +11,15 @@ items = [
 # Create a context for the app
 with app.app_context():
     # Get the group_id for the "Material" group
-    group = Group.query.filter_by(name="Material").first()
+    group = Group.query.filter_by(name="Shop").first()
     if group is None:
-        print("Group 'Material' not found.")
-        exit()
+        group = Group(name="Shop")
+        db.session.add(group)
+        db.session.commit()
 
     group_id = group.id
 
-    # Add each item to the database
+    # Add each item to the database under the specified group (truck)
     for item in items:
         inventory_item = Inventory(name=item["name"], item_type=item["item_type"],
                                   group_id=group_id, quantity=item["quantity"])

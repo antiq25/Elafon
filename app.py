@@ -67,10 +67,13 @@ class ErrorLog(db.Model):
 class Inventory(db.Model):
     __tablename__ = 'inventory'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=True, nullable=False)
+    name = db.Column(db.String(80), nullable=False)
     item_type = db.Column(db.String(80), nullable=False)
     group_id = db.Column(db.Integer, db.ForeignKey('groups.id'), nullable=False)
     quantity = db.Column(db.Integer, nullable=False, default=0)
+    
+    __table_args__ = (db.UniqueConstraint('name', 'group_id', name='unique_name_group'), )
+
 
 
 ## END DATABASE 
@@ -533,12 +536,23 @@ def update_inventory():
 def manage_inventory():
     return render_template('manage_inventory.html')
 
-@app.route('/get_inventory', methods=['GET'])
-@login_required
+
+
+@app.route('/get_inventory')
 def get_inventory():
-    inventory = Inventory.query.all()
-    inventory_json = [{'id': item.id, 'name': item.name, 'type': item.item_type, 'quantity': item.quantity} for item in inventory]
-    return jsonify(inventory_json)
+    # Join the Inventory and Group tables to get the group name for each inventory item
+    inventories = db.session.query(Inventory, Group.name.label("group_name")).join(Group, Inventory.group_id == Group.id).all()
+    
+    # Convert the results to a list of dictionaries for JSON serialization
+    data = [{
+        "id": inventory.Inventory.id,
+        "name": inventory.Inventory.name,
+        "type": inventory.Inventory.item_type,
+        "quantity": inventory.Inventory.quantity,
+        "group_name": inventory.group_name
+    } for inventory in inventories]
+
+    return jsonify(data)
 
 
 @app.route('/delete_inventory', methods=['POST'])
