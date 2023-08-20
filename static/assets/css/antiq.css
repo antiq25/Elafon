@@ -1,0 +1,170 @@
+/* make the logo hug to the right
+ */
+.imgnav  {
+  width: 75px; 
+  height: 75px;
+  float: right;
+  margin-right: 1%;
+  margin-right: auto 0%;
+}
+
+/* make this image and image logo for a nav menu  */
+.imgnav:hover {
+    width: 75px;
+    height: 75px;
+    border: 1px solid #000;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #000;
+}
+
+html {
+  box-shadow: 4px 4px 8px #080809, -4px -4px 8px #19191c !important;
+}
+
+
+
+.gradient {
+    background: linear-gradient(to right, 
+                                transparent 0%, 
+                                #232222 20%, 
+                                #272727 40%, 
+                                #1d1c1c 60%, 
+                                #2e2e2e 80%, 
+                                #2c2c2c 100%);
+    /* Other navbar styles can be added here */
+}
+
+/* Base Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(45deg, #1a1a1a, #2e2e2e);
+    color: #ffffff;
+}
+
+/* Navbar Neumorphic Style */
+.navbar {
+    background-color: #242424;
+    border-radius: 5px;
+    box-shadow: 3px 3px 8px #080809, -3px -3px 8px #3a3a3a;
+}
+
+/* Neumorphic Button */
+.btn {
+    background-color: #242424;
+    border: none;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 3px 3px 8px #080809, -3px -3px 8px #3a3a3a;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.btn:hover {
+    box-shadow: inset 2px 2px 5px #080809, inset -2px -2px 5px #3a3a3a;
+    transform: translateY(2px);
+}
+
+/* Neumorphic Card */
+.card {
+    background-color: #242424;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 3px 3px 8px #080809, -3px -3px 8px #3a3a3a;
+}
+
+.card-header, .card-footer {
+    background-color: #1f1f1f;
+}
+
+.card-body {
+    color: #ffffff;
+}
+
+/* Neumorphic DataTable Styles */
+.neumorphic-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.neumorphic-table thead.neumorphic-thead {
+    background-color: #242424;
+    box-shadow: 3px 3px 8px #080809, -3px -3px 8px #3a3a3a;
+}
+
+.neumorphic-table tbody.neumorphic-tbody tr {
+    background-color: #2a2a2a;
+}
+
+.neumorphic-table tbody.neumorphic-tbody tr:nth-child(odd) {
+    background-color: #2e2e2e;
+}
+
+.neumorphic-table th, .neumorphic-table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #3a3a3a;
+}
+
+.neumorphic-table tbody.neumorphic-tbody tr:last-child th, 
+.neumorphic-table tbody.neumorphic-tbody tr:last-child td {
+    border-bottom: 1px solid #3a3a3a;
+}
+
+/* Gradient Background for Body */
+body {
+    background: linear-gradient(45deg, #1a1a1a, #2e2e2e);
+}
+
+/* Gradient for Navbar */
+.navbar {
+    background: linear-gradient(to right, 
+                                #232222 20%, 
+                                #272727 40%, 
+                                #1d1c1c 60%, 
+                                #2e2e2e 80%, 
+                                #2c2c2c 100%);
+}
+
+/* Gradient for DataTable Headers */
+.neumorphic-table thead.neumorphic-thead {
+    background: linear-gradient(to right, 
+                                #232222 20%, 
+                                #272727 40%, 
+                                #1d1c1c 60%, 
+                                #2e2e2e 80%, 
+                                #2c2c2c 100%);
+}
+
+/* Glassmorphism Base Styles */
+.glassmorphism {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px 0;
+}
+
+/* Enhancing the DataTable with Glassmorphism */
+.neumorphic-table {
+    background: transparent;
+    box-shadow: none;
+}
+
+.neumorphic-table thead.neumorphic-thead {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.neumorphic-table tbody.neumorphic-tbody tr {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.neumorphic-table tbody.neumorphic-tbody tr:nth-child(odd) {
+    background: rgba(255, 255, 255, 0.08);
+}
+

@@ -1,86 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Soft UI - Neumorphism Style UI Kit">
-  <meta name="author" content="kingstudio.ro">
-  <link rel="icon" href="{{ url_for('static', filename='images/favicon.png') }}">
-  <title>aliveai.net</title>
-  <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-  <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
-  <link href="https://cdn.datatables.net/v/bs4/dt-1.13.6/r-2.5.0/datatables.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="{{ url_for('static', filename='css/nouislider.css') }}" rel="stylesheet">
-  <link href="{{ url_for('static', filename='css/animate.css') }}" rel="stylesheet">
-  <link href="{{ url_for('static', filename='css/owl.carousel.min.css') }}" rel="stylesheet">
-  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;600;800&amp;display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600;800&amp;display=swap" rel="stylesheet">
-  <link href="{{ url_for('static', filename='css/fontawesome-all.min.css') }}" rel="stylesheet" type="text/css">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+  ELAFON TRIDENT
+  </title>
+ <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.css" />
+ <link rel="stylesheet" type="text/css" href="../static/css/antiq.css" />
+  <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" type="text/css" href="../static/css/animate.css" />
+  <link rel="stylesheet" type="text/css" href="../static/css/fontawesome-all.min.css" />
+  <link rel="stylesheet" type="text/css" href="../static/css/magnific-popup.css" />
 </head>
-
-<style>
-
-  body {
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #121212 50%, #0f0f0f 75%, #000000 100%);
-    height: 100vh;
-    margin: 0;
-}
-
-</style>
-
-<body>
-  {% block navbar %}
-  <div id="preloader">
-      <div class="preloader">
-          <span></span>
-          <span></span>
-      </div>
+    <body>
+ {% include 'loader.html' %}
+<nav class="navbar navbar-dark gradient3">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img src="../static/img/elafonmechanical.png" alt="" width="180" height="50" class="d-inline-block align-text-top">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+     <li class="nav-item">
+      <a class="nav-link" href="/return_item">
+       Returns
+      </a>
+     </li>
+     <li class="nav-item">
+      <a class="nav-link" href="/equipment">
+       Equipment
+      </a>
+     </li>
+     </ul>
+    </div>  
   </div>
-     <nav class="navbar navbar-expand-lg navbar-light has-sticky-logo main-nav fixed-top">
-          <div class="sticky-nav-activate fixed-top"></div>
-          <div class="container">
-            <a class="navbar-brand sticky-logo" href="/"><img src="https://i.ibb.co/HX0GQX0/logo.png" alt=""></a>
-            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-toggle" aria-controls="navbar-toggle" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="icon-bar top-bar"></span>
-              <span class="icon-bar middle-bar"></span>
-              <span class="icon-bar bottom-bar"></span>
-              <span class="sr-only">Toggle navigation</span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbar-toggle">
-              <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#x" id="dropdown-templates" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-images mr-5 fs-14 va-middle"></i> <span class="va-middle">Poseidon Portal</span></a>
-                  <div class="dropdown-menu mega-menu two-columns" aria-labelledby="dropdown-templates">
-                    <div class="row">
-                      <div class="col-lg-6 sub-menu">
-                        <a class="dropdown-item" href="/"><i class="fas fa-images mr-5"></i> <span>Home</span></a>
-                      </div><!-- / sub-menu -->
-                    </div><!-- / row -->
-                </div><!-- / dropdown-menu -->
-            </li><!-- / dropdown -->
-        </ul><!-- / navbar-nav -->
-        </ul>
-    </div><!-- / navbar-collapse -->
 </nav>
+<br>
+<div class="container-sm my-5">
+  
+  {% block content %}
 {% endblock %}
+</nav>
+</div>
 
-
-
-        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/v/bs4/dt-1.13.6/r-2.5.0/datatables.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-        <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/preloader.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/smooth-scroll.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/hide-nav.js') }}"></script>
-     
+<script src="../static/js/bootstrap.bundle.js"></script>
+<script src="../static/js/jquery.js"></script>
+ <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+ <script src="../static/js/jquery.magnific-popup.min.js"></script>
 </body>
-
-{% block content %}
-   {% endblock %}
 </html>
+

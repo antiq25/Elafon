@@ -2,33 +2,40 @@
 {% block content %}
   {% set items_out = signouts|selectattr('returned', 'equalto', false)|list %}
   {% if items_out|length > 0 %}
-  <div id="loader" class="loader" style="display:none">Loading...</div>
-  <!-- Page Heading -->
-  <table class="display responsive nowrap" width="100%">
-      <table id="items-table" class="table table-hover">
-
-            <thead> 
-              <tr>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for signout in items_out %}
-              <tr>
-                <td>{{ signout.technician.name }}</td>
-                <td>{{ signout.item.name }}</td>
-                <td>{{ signout.item.item_type }}</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  <script>
-    (function() {
+   <div class="table-responsive text-white" width="100%" >
+   <table class="table-dark bg-dark table table-hover glassmorphism" id="items-table">
+   <thead class="neumorphic-thead">
+    <tr>
+     <th>
+      TECH
+     </th>
+     <th>
+      ITEM
+     </th>
+     <th>
+      TYPE
+     </th>
+    </tr>
+   </thead>
+   <tbody class="neumorphic-tbody">
+    {% for signout in items_out %}
+    <tr>
+     <td>
+      {{ signout.technician.name }}
+     </td>
+     <td>
+      {{ signout.item.name }}
+     </td>
+     <td>
+      {{ signout.item.item_type }}
+     </td>
+    </tr>
+    {% endfor %}
+   </tbody>
+  </table>
+ </div>
+<script>
+ (function() {
       $(document).ready(function() {
         var itemsTable = $('#items-table').DataTable({
           language: {
@@ -50,11 +57,31 @@
         });
       });
     })();
-  </script>
-  {% else %}
-  <h2 style="color: #000; font-family: Arial, sans-serif; font-size: 24p; color: white;">Welcome, {{ technicianName }}</h2>
-  <p style="color: #000; font-family: Arial, sans-serif; font-size: 18px; color: white;">There are no items signed out.</p>
-</div>
-{% endif %}
+</script>
+{% else %}
+<h2 style="color: #000; font-family: Arial, sans-serif; font-size: 24p; color: white;">
+ Welcome, {{ technicianName }} 
+</h2>
+<p style="color: #000; font-family: Arial, sans-serif; font-size: 18px; color: white;">
+ There are no items signed out.
+</p>
+{% endif %} 
+{% include 'loader.html' %}
+<script>
+ // Show the loader when the page starts loading
+  document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('loader').style.display = 'flex';
+  });
 
+  // Hide the loader with fade-out transition after the animation completes
+  window.addEventListener('load', function () {
+      setTimeout(function () {
+          var loaderWrapper = document.getElementById('loader-wrapper');
+          loaderWrapper.classList.add('fade-out');
+          setTimeout(function () {
+              loaderWrapper.style.display = 'none';
+          }, 500);
+      }, 700);
+  });
+</script>
 {% endblock %}

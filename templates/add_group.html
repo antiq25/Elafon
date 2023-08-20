@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
 
+
 <div class="container-fluid"></div>
     <img class="imgr img-fluid mx-auto d-block p-4" src="https://i.ibb.co/SvMZJ2T/Elafon-Logo.png" alt="">           
-        <div class="mt-5 glass p-4">
-          <h5 class="display-4 text-center text-primary mb-5">Create Groups</h1>
+        <div class="mt-5 p-4">        
+          <h5 class="display-4 text-center text-primary mb-5">Add Inventory</h1>
         <form action="/add_group" method="post">
             <div class="mb-3">
                 <label for="name" class="form-label">Group Name:</label>
@@ -15,4 +16,5 @@
         <a href="{{ url_for('home') }}" class="btn btn-link mt-3 text-decoration-none text-primary">Go back to home</a>
     </div>
 </div>
+
 {% endblock content %}

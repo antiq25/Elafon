@@ -28,8 +28,10 @@ class Item(db.Model):
     name = db.Column(db.String(80), unique=True, nullable=False)
     is_signed_out = db.Column(db.Boolean, nullable=False, default=False)
     item_type = db.Column(db.String(80), nullable=False)
+    description = db.Column(db.String(500))  # assuming max description length of 500 characters
     group_id = db.Column(db.Integer, db.ForeignKey('groups.id'), nullable=False)
     signouts = db.relationship('Signout', backref='item', lazy=True)
+
 
 class Technician(db.Model):
     __tablename__ = 'technicians'
@@ -71,7 +73,7 @@ class Inventory(db.Model):
     quantity = db.Column(db.Integer, nullable=False, default=0)
 
 
-
+## END DATABASE 
 
 @app.errorhandler(Exception)
 def handle_exception(e):
@@ -122,10 +124,10 @@ def home():
 
     items = Item.query.filter_by(is_signed_out=True).all()
     item_types = [item.item_type for item in items]
-
+    descriptions = [item.description for item in items] 
     signouts = Signout.query.all()  # Fetch all signouts without filtering by technician
 
-    return render_template('home.html', tech=tech, item_types=item_types, signouts=signouts)
+    return render_template('home.html', tech=tech, item_types=item_types, signouts=signouts, descriptions=descriptions) 
 
 
 @app.route('/equipment', methods=['GET', 'POST'])
@@ -178,8 +180,32 @@ def equipment():
 @login_required
 def get_equipment():
     items = Item.query.filter_by(is_signed_out=False).all()
-    equipment = [{'id': item.id, 'name': item.name, 'type': item.item_type} for item in items]
+    equipment = [{'id': item.id, 'name': item.name, 'type': item.item_type} for item 
+    in items]
     return jsonify(equipment)
+
+
+
+@app.route('/get_equipment_stats', methods=['GET'])
+def get_equipment_stats():
+    # Get the total number of each equipment type signed out.
+    types_stats = db.session.query(Signout.item_type, db.func.count(Signout.item_type)).group_by(Signout.item_type).all()
+    
+    # Get the top technicians who have signed out the most equipment.
+    top_techs = db.session.query(Technician.name, db.func.count(Signout.technician_id)).join(Signout).group_by(Technician.name).order_by(db.func.count(Signout.technician_id).desc()).limit(5).all()
+
+    # Get the most frequently signed-out items.
+    popular_items = db.session.query(Item.name, db.func.count(Signout.item_id)).join(Signout).group_by(Item.name).order_by(db.func.count(Signout.item_id).desc()).limit(5).all()
+
+    data = {
+        "type_stats": dict(types_stats),
+        "top_techs": dict(top_techs),
+        "popular_items": dict(popular_items)
+    }
+    
+    return jsonify(data)
+
+
 
 @app.route('/add_group', methods=['GET', 'POST'])
 @login_required
@@ -316,7 +342,41 @@ def show_return_item():
     return render_template('return_item.html', tech=tech, tech_signouts=tech_signouts)
 
 
+@app.route('/return_all_items', methods=['POST'])
+@login_required
+def return_all_items():
+    tech_id = session.get('tech_id')
+    
+    # Retrieve all signouts for the technician that haven't been returned
+    tech_signouts = Signout.query.filter_by(technician_id=tech_id, returned=False).all()
 
+    if not tech_signouts:
+        return redirect(url_for('error_page', error_msg="No items to return."))
+
+    try:
+        for signout in tech_signouts:
+            if signout.item_id is not None:
+                item = Item.query.get(signout.item_id)
+                if item:
+                    item.is_signed_out = False
+
+            signout.returned = True
+            signout.date_returned = datetime.now()
+
+        db.session.commit()
+        flash('All items returned successfully', 'success')
+    except Exception as e:
+        db.session.rollback()
+        return redirect(url_for('error_page', error_msg=f"An error occurred while returning the items: {str(e)}"))
+
+    return redirect(url_for('show_return_item'))
+
+
+
+@app.route('/dashboard')
+@login_required
+def ui():
+    return render_template('dashboard.html')
 
 
 @app.route('/layout')

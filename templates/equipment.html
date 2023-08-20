@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 
-{% include 'flash.html" %}
-
             <img class="imgr img-fluid mx-auto d-block p-4" src="https://i.ibb.co/SvMZJ2T/Elafon-Logo.png" alt="">
             {% if tech_signouts %}
                 <ul class="list-group list-group-flush">
@@ -35,32 +33,4 @@
         </div>
     </div>
 </div>
-
-<script>
-    window.setTimeout(function(){
-        var flashMessages = document.getElementsByClassName("flash-message");
-        for (var i = 0; i < flashMessages.length; i++) {
-            var flashMessage = flashMessages[i];
-            flashMessage.style.visibility = "hidden";
-        }
-    }, 5000);
-</script>
-
-{% include 'loader.html' %}
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('loader').style.display = 'block';
-    });
-
-    window.addEventListener('load', function() {
-        var loader = document.getElementById('loader');
-        loader.style.transition = 'opacity 0.5s';
-        loader.style.opacity = '0';
-        setTimeout(function() {
-            loader.style.display = 'none';
-        }, 1000);
-    });
-</script>
-
-{% endblock %}
+{% endblock content %}

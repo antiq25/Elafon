@@ -1,94 +1,90 @@
 {% extends 'layout.html' %}
-
 {% block content %}
-<div class="full-height relative p-y-30 v-center bg-img" style="background-image: url(../static/images/bg-img7.jpg)">
-    <div class="container p-y-70">
-        <div class="m-x-auto" style="max-width: 500px;">
-            
-            <div class="card mb-15">
-                <div class="card-body p-x-25">
-                    <ul class="nav nav-tabs nav-pills text-center p-x-50" role="tablist">
-                        <li class="nav-item m-x-auto">
-                            <a class="nav-link active p-x-40" data-bs-toggle="tab" href="#tab-sign-in" role="tab">
-                                <i class="fas fa-lock mr-5 va-middle"></i>
-                                <span class="va-middle">Sign In</span>
-                            </a>
-                        </li>
-                        <li class="nav-item nav-tabs nav-pills m-x-auto">
-                            <a class="nav-link p-x-40" data-bs-toggle="tab" href="#tab-register" role="tab">
-                                <i class="fas fa-user mr-5 va-middle"></i>
-                                <span class="va-middle">Register</span>
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane fade show active mt-20 p-15" id="tab-sign-in" role="tabpanel">
-                            <form id="login-form3" action="/login" method="post"> 
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="name" value="" placeholder="name" id="name" required>
-                                </div>
+<style> 
+* {
 
-                                <div class="form-group">
-                                    <input type="password" class="form-control" name="password" type="password" id="password" placeholder="Password" required>
-                                </div>
+    border: 0 !important;
+}
 
-                                <div class="row v-center mt-30">
-                                    <div class="col-lg-5 tablet-lg-top-30">
-                                        <div class="checkbox checkbox-primary ml-10">
-                                            <label class="hidden"><input type="checkbox"></label>
-                                            <input id="checkbox-login2" type="checkbox">
-                                            <label for="checkbox-login2"><span class="fw-light">Remember Me</span></label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-7 text-right">
-                                        <button type="submit" class="btn btn-sm btn-primary tablet-lg-fw">
-                                            <i class="fas fa-sign-in-alt mr-5"></i> Sign In
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                            <div class="pt-60 text-center">
-                                <p style="margin-bottom:4px;">Sign in with:</p>
-                                <a href="#x" class="btn btn-sm btn-outline-facebook mt-5">
-                                    <span class="fab fa-facebook-f mr-5"></span>
-                                    <span>Facebook</span>
-                                </a>
-                                <a href="#x" class="btn btn-sm btn-outline-twitter mt-5">
-                                    <span class="fab fa-twitter mr-5"></span>
-                                    <span>Twitter</span>
-                                </a>
-                                <a href="#x" class="btn btn-sm btn-outline-warning mt-5">
-                                    <span class="fab fa-google mr-5"></span>
-                                    <span>Google</span>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade mt-20 p-15" id="tab-register" role="tabpanel">
-                            <form id="register-form3" action="/signup" method="post">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="name" value="" placeholder="Username" id="register-name" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control" name="password" id="register-password" placeholder="Password" required>
-                                </div>
-                                <div class="row v-center mt-30">
-                                    <div class="col-xl-7 tablet-xl-top-30">
-                                        <div class="checkbox checkbox-primary ml-10">
-                                            <label class="hidden"><input type="checkbox"></label>
-                                            <input id="checkbox-register2" type="checkbox">
-                                            <label for="checkbox-register2"><span> Accept <a href="#x">Terms &amp; Conditions</a></span></label>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-5 text-right">
-                                        <button type="submit" class="btn btn-sm btn-primary tablet-xl-fw">
-                                            <i class="fas fa-user mr-5"></i> Register
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+
+.imgnav {
+    width: 100px ;
+    height: 100px;
+}
+
+.imgr.img-fluid {
+    width: 400px ;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+}   
+
+.nav-link {
+    border: 0 !important;
+    color: yellow;
+}
+
+.nav-link:hover {
+    border: 0 !important;
+    color: white;
+}
+
+
+@media (max-width: 480px),
+(max-width: 300px),
+(max-width: 450px),
+(max-width: 414px) {
+    .imgn1 {
+        width: 250px;
+        height: 100px;
+    }
+}
+   
+</style>
+<div class="container-sm fs-5">
+    <img class="imgr img-fluid mx-auto d-block p-4" src="https://i.ibb.co/SvMZJ2T/Elafon-Logo.png" alt="">           
+        <div class="mt-5 p-4">   
+    </header>
+    <div class="card bg-transparent">
+        <ul class="nav nav-tabs small mb-0" id="myTab" role="tablist">
+            <li class="nav-item mb-0" role="presentation">
+                <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab" aria-controls="login" aria-selected="true">Login</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#register" type="button" role="tab" aria-controls="register" aria-selected="false">Register</button>
+            </li>
+        </ul>
+        <div class="tab-content bg-transparent border-0">
+            <div class="tab-pane fade show active border-0" id="login" role="tabpanel" aria-labelledby="login-tab">
+                <form action="/login" method="post" class="border-0">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" name="name" placeholder="name" id="name" required>
                     </div>
-                </div>
+                    <div class="mb-3 border-0">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
             </div>
-      
+            <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
+                <form action="/signup" method="post">
+                    <div class="mb-3">
+                        <label for="register-name" class="form-label">Username</label>
+                        <input type="text" class="form-control" name="name" placeholder="Username" id="register-name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="register-password" class="form-label">Password</label>
+                        <input type="password" class="form-control" name="password" id="register-password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

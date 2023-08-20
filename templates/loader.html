@@ -1,47 +1,118 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title></title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    .loader {
-      display: none;  /* Hidden by default */
-      position: fixed;  /* Stay in place */
-      z-index: 1;  /* Sit on top */
-      left: 0;
-      top: 0;
-      width: 100%;  /* Full width */
-      height: 100%;  /* Full height */
-      overflow: auto;  /* Enable scroll if needed */
-      background-color: rgb(0,0,0);  /* Black background with opacity */
-      background-color: rgba(0,0,0,0.4);  /* Also works with black and white images, but will slightly alter image colors */
+{% block content %}
+<style>
+  #loader-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-repeat: no-repeat;
+    font-family: Arial, sans-serif;
+    display: none; /* Hide the loader wrapper by default */
+  }
+
+  .loader {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .loader img {
+    width: 50px;
+    height: 50px;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+  }
+
+  .loader:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    margin: -30px 0 0 -30px;
+    border: 3px solid #ffffff;
+    border-top: 3px solid #383838;   
+    /* create linear gradient colours */
+    border-bottom: 3px solid #fffb02;
+    border-left: 3px solid #fffb02; 
+    border-radius: 50%;
+    z-index: 9;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
     }
-  
-    /* Add a spinner animation to the loader */
-    .loader:before {
-      content: '';
-      display: block;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 60px;
-      height: 60px;
-      margin: -30px 0 0 -30px;
-      border: 6px solid #f3f3f3;
-      border-top: 6px solid #3498db;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
+    100% {
+      transform: rotate(360deg);
     }
-  
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-  </style>  
-</head>
-<div id="loader" class="loader"></div>
-</body>
-</html>
+  }
+</style>
+<!-- flash.html -->
+{# Display flash messages #}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-primary fade show alert-default" role="alert">
+                    {{ message }}
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+            {% endfor %}
+                 <script>
+            window.setTimeout(function() {
+                $(".alert-primary").fadeOut('medium');
+            }, 1500);
+        </script>
+        {% endif %}
+    {% endwith %}
+</div>
+
+<div id="loader-wrapper">
+  <div id="loader" class="loader">
+    <img class="logo" src="https://i.ibb.co/SvMZJ2T/Elafon-Logo.png">
+  </div>
+</div>
+<script>
+  // Get the loader wrapper element
+  var loaderWrapper = document.getElementById('loader-wrapper');
+
+  // Show the loader
+  function showLoader() {
+    loaderWrapper.style.display = 'flex';
+  }
+
+  // Hide the loader
+  function hideLoader() {
+    loaderWrapper.style.display = 'none';
+  }
+
+  // Trigger the loader when necessary (e.g., before making an AJAX request)
+  showLoader();
+
+  // Simulate a delay (remove this code and call hideLoader() when your actual task completes)
+  setTimeout(function() {
+    hideLoader();
+  }, 1000);
+</script>
+{% endblock %}
