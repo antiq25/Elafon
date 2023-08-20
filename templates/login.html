@@ -1,90 +1,103 @@
-{% extends 'layout.html' %}
-{% block content %}
-<style> 
-* {
+<!DOCTYPE html>
+<html lang="en">
 
-    border: 0 !important;
-}
-
-
-.imgnav {
-    width: 100px ;
-    height: 100px;
-}
-
-.imgr.img-fluid {
-    width: 400px ;
-    height: 150px;
-    display: flex;
-    justify-content: center;
-    width: 50px;
-    height: 50px;
-}   
-
-.nav-link {
-    border: 0 !important;
-    color: yellow;
-}
-
-.nav-link:hover {
-    border: 0 !important;
-    color: white;
-}
+<head>
+    <title>Elafon Mechanical</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Item and Inventory Management">
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/css/antiq.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
 
-@media (max-width: 480px),
-(max-width: 300px),
-(max-width: 450px),
-(max-width: 414px) {
-    .imgn1 {
-        width: 250px;
-        height: 100px;
-    }
-}
-   
-</style>
-<div class="container-sm fs-5">
-    <img class="imgr img-fluid mx-auto d-block p-4" src="https://i.ibb.co/SvMZJ2T/Elafon-Logo.png" alt="">           
-        <div class="mt-5 p-4">   
-    </header>
-    <div class="card bg-transparent">
-        <ul class="nav nav-tabs small mb-0" id="myTab" role="tablist">
-            <li class="nav-item mb-0" role="presentation">
-                <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab" aria-controls="login" aria-selected="true">Login</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#register" type="button" role="tab" aria-controls="register" aria-selected="false">Register</button>
-            </li>
-        </ul>
-        <div class="tab-content bg-transparent border-0">
-            <div class="tab-pane fade show active border-0" id="login" role="tabpanel" aria-labelledby="login-tab">
-                <form action="/login" method="post" class="border-0">
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" name="name" placeholder="name" id="name" required>
-                    </div>
-                    <div class="mb-3 border-0">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Login</button>
-                </form>
-            </div>
-            <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
-                <form action="/signup" method="post">
-                    <div class="mb-3">
-                        <label for="register-name" class="form-label">Username</label>
-                        <input type="text" class="form-control" name="name" placeholder="Username" id="register-name" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="register-password" class="form-label">Password</label>
-                        <input type="password" class="form-control" name="password" id="register-password" placeholder="Password" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Register</button>
-                </form>
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.23);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            margin-top: 50px;
+            padding: 20px;
+        }
+
+        .texter {
+            font-weight: 700;
+            font-size: 2rem;
+            color: #333;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .nav-link {
+            color: #007bff;
+            border-radius: 0;
+        }
+
+        .nav-link:hover {
+            color: #0056b3;
+            background-color: transparent;
+        }
+
+        .tab-content {
+            padding: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid small shadow-sm ">
+        <div class="card glassmorphism shadow-lg ">
+            <ul class="nav nav-tabs small mb-0" id="myTab" role="tablist">
+                <li class="nav-item mb-0" role="presentation">
+                    <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab" aria-controls="login" aria-selected="true">Login</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#register" type="button" role="tab" aria-controls="register" aria-selected="false">Register</button>
+                </li>
+            </ul>
+            <div class="tab-content bg-transparent">
+                <div class="tab-pane show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+                    <form action="/login" method="post">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name" placeholder="name" id="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+                </div>
+                <div class="tab-pane" id="register" role="tabpanel" aria-labelledby="register-tab">
+                    <form action="/signup" method="post">
+                        <div class="mb-3">
+                            <label for="register-name" class="form-label">Username</label>
+                            <input type="text" class="form-control" name="name" placeholder="Username" id="register-name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="register-password" class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password" id="register-password" placeholder="Password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="../static/js/bootstrap.bundle.js"></script>
+</body>
 
-{% endblock %}
+</html>
+
+<!-- animatedz -->

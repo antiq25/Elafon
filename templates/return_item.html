@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block content %} {% include 'flash.html' %}
 <div class="container-fluid">
   <div class="mt-5 glass p-4">
-    <h5 class="display-4 text-center text-primary mb-5">Return Equipment</h5>
+    <h5 class="display-4 text-center text-white mb-5">Return Equipment</h5>
     {% if tech_signouts|length > 0 %}
     <ul class="list-group list-group-flush">
       {% for signout in tech_signouts %} {% if signout.item %}
@@ -30,8 +30,8 @@
       </button>
     </form>
     {% else %}
-    <h4 class="card-title text-center">{{ tech.name }}'s profile</h4>
-    <p class="card-text text-center">No signouts found</p>
+    <h4 class="card-title text-center text-white">Hey, {{ tech.name }} </h4>
+    <p class="card-text text-center text-white">Theres nothing to return.</p>
     {% endif %}
   </div>
 </div>
