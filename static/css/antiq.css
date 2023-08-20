@@ -1,4 +1,29 @@
+html {
+  /* create it so that everything fits into the viewport */
+  
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;  
+  scroll-behavior: smooth;
+  margin: 0;  
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none; 
+  /* its still  there
+       */
+}
+::-webkit-scrollbar {
+  display: none;
+}
 
+/* Hide scrollbar for IE and Edge */
+body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 
   html, body {
     background-image: url('/static/img/the_electra.jpg ');
@@ -50,7 +75,7 @@
       border-radius: 12px;
       border: 1px solid rgba(255, 255, 255, 0.125);
     }
-    
+
 .gradient4 {
   background: linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), linear-gradient(to top, rgba(255, 255, 255, 0.40) 0%, rgba(0, 0, 0, 0.25) 200%);
   background-blend-mode: multiply;
