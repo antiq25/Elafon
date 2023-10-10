@@ -1,0 +1,26 @@
+.chartjs-size-monitor {
+    color: white; 
+  }
+
+  .chartjs-render-monitor {
+    color: white;
+  } 
+
+  #typeChart {
+    color: white !important;
+  }
+
+#canvas {
+  color: white !important;
+} 
+
+.my-4.w-100.chartjs-render-monitor, .my-4.w-100.chartjs-size-monitor   {
+  color: white !important;   
+}
+
+#techChart {
+  color: white !important;
+}
+
+
+

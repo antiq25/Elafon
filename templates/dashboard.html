@@ -1,63 +1,116 @@
-{% extends 'base.html' %}
-{% block content %}
-  <style>
-    html, body {
-      color: white !important;
-    }
-    
-    body {
-      color: white !important;
-    }
-    a {
-      color: white !important;
-    }
-    
-    h1 {
-      color: white !important;
-    }
-
-    chartjs-size-monitor {
-      color: white; 
-    }
-
-    .charjs-render-monitor {
-      color: white;
-    } 
-
-    #typeChart {
-      color: white !important;
-    }
-
-  canvas {
-    color: white !important;
-  } 
-
-  .my-4.w-100.chartjs-render-monitor, .my-4.w-100.chartjs-size-monitor   {
-    color: white imporat !important;   
+<link rel="stylesheet" href="../static/css/chart.css">
+<link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+<style>
+  #map {
+    width: 100% !important;
+    height: 100% !important;
   }
 
-  techChart {
-    color: white !important;
+  #vector {
+    width: 100%;
+    height: 100%;
   }
+</style>
+<link rel="stylesheet" media="all" href="../static/css/jquery-jvectormap.css"/>
+<script src="../static/jvectormap/tests/assets/jquery-1.8.2.js"></script>
+<script src="../static/jvectormap/jquery.jvectormap.min.js"></script>
+<script src="../static/js/canada.js"></script>
+<script src="../static/js/jquery.dataTables.js"></script>
 
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Top Tech's</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages" type="button" role="tab" aria-controls="messages" aria-selected="false">Top Item's</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="vector-tab" data-bs-toggle="tab" data-bs-target="#vector" type="button" role="tab" aria-controls="vector" aria-selected="false">Location's</button>
+  </li>
+</ul>
 
-  </style>
-</head>
-
-<body>
-   <main class="grid-l-md-9 ml-sm-auto col-lg-10 px-md-4">
-<div class="row justify-content-center align-items-center g-2 text-white">
-        <canvas class="my-4 w-100" id="typeChart" width="900" height="380" style="color:white;"></canvas>
-        <canvas class="my-4 w-100" id="techChart" width="900" height="380"></canvas>
-        <canvas class="my-4 w-100" id="itemChart" width="900" height="380"></canvas>
+<!-- Tab panes -->
+<div class="tab-content">
+  <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab"></div>
+  <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab"> 
+    <canvas class="w-100" id="techChart" width="900" height="380"></canvas>
+  </div>
+  <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab"> 
+    <canvas class="w-100" id="itemChart" width="900" height="380"></canvas>
+  </div>
+  <div class="tab-pane" id="vector" role="tabpanel" aria-labelledby="vector"> 
+    <div id="map"></div>
+  </div>
 </div>
- 
 
-     
-<script src="../static/js/jquery.js"></script>
-<script src="../static/js/bootstrap.bundle.js"></script>  
+<script>
+$(document).ready(function() {
+  // Initially hide all tab contents except for the home tab
+  $(".tab-pane").not("#home").hide();
+
+  // When any tab is clicked
+  $(".nav-link").click(function() {
+    // Fade out the currently visible tab content
+    $(".tab-pane:visible").fadeOut("medium");
+
+    // If the clicked tab is not the home tab
+    if ($(this).attr("id") !== "home-tab") {
+      // Fade out the table
+      $(".table-responsive").fadeOut("medium");
+    } else {
+      // If the clicked tab is the home tab, fade in the table
+      $(".table-responsive").fadeIn("medium");
+    }
+
+    // Fade in the clicked tab content
+    $($(this).attr("data-bs-target")).delay(600).fadeIn("medium");
+  });
+});
+
+function handlePosition(position) {
+  var lat = position.coords.latitude;
+  var lon = position.coords.longitude;
+
+  $.ajax({
+    url: 'process_gps_data',
+    type: 'POST',
+    data: {latitude: lat, longitude: lon},
+    success: function(response) {
+      // Update the map with the new coordinates
+      updateMap(lat, lon);
+    },
+    error: function(error) {
+      console.error(error);
+    }
+  });
+}
+
+navigator.geolocation.getCurrentPosition(handlePosition);
+
+$(function() {
+  $('#map').vectorMap({
+    map: 'ca_lcc',
+    markerStyle: {
+      initial: {
+        fill: '#F8E23B',
+        stroke: '#383f47'
+      }
+    },
+    markers: []
+  });
+});
+
+function updateMap(lat, lon) {
+  var mapObj = $('#map').vectorMap('get', 'mapObject');
+  var newMarker = {latLng: [lat, lon], name: 'My Location'};
+  mapObj.addMarker(0, newMarker, []);
+}
+</script>
+
 <script src="../static/js/dashboard.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.24.1/feather.min.js"crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.24.1/feather.min.js" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" crossorigin="anonymous"></script>
-
-{% endblock content %}

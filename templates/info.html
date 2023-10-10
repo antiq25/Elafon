@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-4">
+    <h5 class="mb-4">Signed Out Items History</h5>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle" id="signed-out-items-table">
+            <thead class="thead-light">
+                <tr>
+                    <th>Item Name</th>
+                    <th>Item Type</th>
+                    <th>Date Signed Out</th>
+                    <th>Technician</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for signout in tech_signouts %}
+                <tr>
+                    <td>{{ signout.item.name }}</td>  <!-- Assuming the Item model has a name field -->
+                    <td>{{ signout.item_type }}</td>
+                    <td>{{ signout.date_out.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    <td>{{ tech.name }}</td>  <!-- Assuming the Technician model has a name field -->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+html {
+    color: black;
+
+    scroll-behavior: smooth;
+}
+
+body {
+    color: black;
+}
+
+
+html, body {
+    background-color: white !important;
+}
+
+.overlay-smrt {
+    background-color: aliceblue;
+}

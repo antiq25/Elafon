@@ -30,7 +30,22 @@ class Item(db.Model):
     item_type = db.Column(db.String(80), nullable=False)
     description = db.Column(db.String(500))  # assuming max description length of 500 characters
     group_id = db.Column(db.Integer, db.ForeignKey('groups.id'), nullable=False)
+    updates = db.relationship('ItemUpdate', back_populates='item', lazy=True)
+
     signouts = db.relationship('Signout', backref='item', lazy=True)
+
+class ItemUpdate(db.Model):
+    __tablename__ = 'item_updates'
+    id = db.Column(db.Integer, primary_key=True)
+    item_id = db.Column(db.Integer, db.ForeignKey('items.id'), nullable=False)
+    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    update_type = db.Column(db.String(80), nullable=False)  # e.g., 'Service', 'Repair', 'Breakage', etc.
+    description = db.Column(db.String(500), nullable=False)  # Details about the update
+    technician_id = db.Column(db.Integer, db.ForeignKey('technicians.id'), nullable=False)  # ID of the technician making the update
+
+    item = db.relationship('Item', back_populates='updates')
+    technician = db.relationship('Technician', back_populates='updates')
+
 
 
 class Technician(db.Model):
@@ -38,6 +53,7 @@ class Technician(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
+    updates = db.relationship('ItemUpdate', back_populates='technician', lazy=True)
     role = db.Column(db.String(80), nullable=False, server_default='technician')  # Set a server default
     signouts = db.relationship('Signout', backref='technician', lazy=True)
 
@@ -374,6 +390,43 @@ def return_all_items():
 
     return redirect(url_for('show_return_item'))
 
+@app.route('/item/<int:item_id>', methods=['GET', 'POST'])
+@login_required
+def item_profile(item_id):
+    tech_id = session.get('tech_id')
+    tech = Technician.query.get(tech_id)
+    tech_signouts = Signout.query.filter_by(technician_id=tech_id, returned=False).all()
+    item = Item.query.get(item_id)
+
+    item = Item.query.get(item_id)
+    if item is None:
+        return redirect(url_for('error_page', error_msg='Item not found'))
+
+    if request.method == 'POST':
+        update_type = request.form.get('update_type')
+        description = request.form.get('description')
+
+        # Check that update_type and description are not None
+        if update_type is None or description is None:
+            flash('Update type and description are required.', 'danger')
+            return redirect(url_for('item_profile', item_id=item_id))
+
+        update = ItemUpdate(
+            item_id=item.id,
+            update_type=update_type,
+            description=description,
+            technician_id=session.get('tech_id')
+        )
+        db.session.add(update)
+        db.session.commit()
+        flash('Update added successfully', 'success')
+
+    updates = ItemUpdate.query.filter_by(item_id=item.id).order_by(ItemUpdate.date.desc()).all()
+    signouts = Signout.query.filter_by(item=item).all() # Get all signouts associated with the item
+    return render_template('item_profile.html', item=item, updates=updates, tech=tech, tech_signouts=tech_signouts, signouts=signouts)
+
+
+
 
 
 @app.route('/dashboard')
@@ -537,6 +590,29 @@ def manage_inventory():
     return render_template('manage_inventory.html')
 
 
+@app.route('/process_gps_data', methods=['POST'])
+def process_gps_data():
+    # Get latitude and longitude from the request
+    latitude = request.form.get('latitude')
+    longitude = request.form.get('longitude')
+    
+    if latitude and longitude:
+        # Process the GPS data as needed
+        # For example, store the data in a database or file
+        
+        response_data = {
+            'status': 'success',
+            'message': 'GPS data processed successfully'
+        }
+    else:
+        response_data = {
+            'status': 'error',
+            'message': 'Missing latitude or longitude data'
+        }
+    
+    return jsonify(response_data)
+
+
 
 @app.route('/get_inventory')
 def get_inventory():
@@ -595,6 +671,22 @@ def admin_dash():
 def elafon_gpt():
     # Render the template inside the 'dashboard' subdirectory
     return render_template('elafon_gpt.html')
+
+
+@app.route('/jvector')
+def jvector():
+    # Render the template inside the 'dashboard' subdirectory
+    return render_template('jvector.html')
+
+
+@app.route('/info', methods=['GET'])
+@login_required
+def info():
+    tech_id = session.get('tech_id')
+    tech = Technician.query.get(tech_id)
+    tech_signouts = Signout.query.filter_by(technician_id=tech_id, returned=False).all()
+    return render_template('info.html', tech=tech, tech_signouts=tech_signouts)
+
 
 
 @app.context_processor

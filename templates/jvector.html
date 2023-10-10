@@ -1,0 +1,56 @@
+{% block content %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPS Tracking with jVectorMap</title>
+    <link rel="stylesheet" media="all" href="../static/css/jquery-jvectormap.css"/>
+    <script src="../static/jvectormap/tests/assets/jquery-1.8.2.js"></script>
+    <script src="../static/jvectormap/jquery.jvectormap.min.js"></script>
+    <script src="../static/js/canada.js"></script>
+</head>
+<body>
+
+  <div class="container-fluid">
+<div id="map"></div>
+  </div>
+<script>
+    function handlePosition(position) {
+        var lat = position.coords.latitude;
+        var lon = position.coords.longitude;
+
+        $.ajax({
+            url: 'process_gps_data',
+            type: 'POST',
+            data: { latitude: lat, longitude: lon },
+            success: function(response) {
+                // Update the map with the new coordinates
+                updateMap(lat, lon);
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        });
+    }
+    
+    navigator.geolocation.getCurrentPosition(handlePosition);
+    
+    $(function(){
+      $('#map').vectorMap({
+        map: 'ca_lcc',
+            markerStyle: {
+              initial: {
+                fill: '#F8E23B',
+                stroke: '#383f47'
+              }
+            },
+            markers: []
+        });
+    });
+
+    function updateMap(lat, lon) {
+        var mapObj = $('#map').vectorMap('get', 'mapObject');
+        var newMarker = {latLng: [lat, lon], name: 'My Location'};
+        mapObj.addMarker(0, newMarker, []);
+    }
+</script>
+
+{% endblock %}

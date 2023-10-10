@@ -1,0 +1,73 @@
+<!-- item_profile.html -->
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-4">
+    <h5 class="mb-4">Item Profile: {{ item.name }}</h5>
+    <!-- ... display item details ... -->
+
+    <h6 class="mt-4">Updates</h6>
+    <form method="POST">
+        <div class="form-group">
+            <label for="update_type">Update Type</label>
+            <input type="text" class="form-control" id="update_type" name="update_type" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Update</button>
+    </form>
+
+    <div class="table-responsive mt-4">
+        <table class="table table-striped table-hover align-middle">
+            <thead class="thead-light">
+                <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Technician</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for update in updates %}
+                <tr>
+                    <td>{{ update.date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    <td>{{ update.update_type }}</td>
+                    <td>{{ update.description }}</td>
+                    <td>{{ update.technician.name }}</td>  <!-- Assuming the Technician model has a name field -->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+<h6 class="mt-4">Signout History</h6>
+<div class="table-responsive mt-4">
+    <table class="table table-striped table-hover align-middle">
+        <thead class="thead-light">
+            <tr>
+                <th>Date Out</th>
+                <th>Technician</th>
+                <th>Returned</th>
+                <!-- Assuming there's a 'returned' field in the Signout model -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for signout in signouts %}
+            <tr>
+                <td>{{ signout.date_out.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>{{ signout.technician.name }}</td>
+                <!-- Assuming the Technician model has a name field -->
+                <td>{% if signout.returned %}'Yes'{% else %}'No'{% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}
+
+
+

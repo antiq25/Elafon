@@ -5,44 +5,14 @@ let itemChart;
 function refreshChartData() {
   $.getJSON("/get_equipment_stats")
     .done(function (data) {
-      const typeLabels = Object.keys(data.type_stats);
-      const typeValues = Object.values(data.type_stats);
+
       const techLabels = Object.keys(data.top_techs);
       const techValues = Object.values(data.top_techs);
       const itemLabels = Object.keys(data.popular_items);
       const itemValues = Object.values(data.popular_items);
 
       // Initialize or update the Type Chart
-      if (typeChart) {
-        typeChart.data.labels = typeLabels;
-        typeChart.data.datasets[0].data = typeValues;
-        typeChart.update();
-      } else {
-        typeChart = new Chart(document.getElementById("typeChart"), {
-          type: "bar",
-          data: {
-            labels: typeLabels,
-            datasets: [
-              {
-                label: "Equipment Types Signed Out",
-                data: typeValues,
-                backgroundColor: "rgba(75, 192, 192, 0.2)",
-                borderColor: "rgba(75, 192, 192, 1)",
-                borderWidth: 1,
-                color: "rgba(255, 255, 255, 255)", 
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            scales: {
-              y: {
-                beginAtZero: true,
-              },
-            },
-          },
-        });
-      }
+     
 
       // Similarly, initialize or update the Technician and Item charts...
 

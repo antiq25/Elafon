@@ -1,46 +1,47 @@
 {% extends 'base.html' %}
 {% block content %}
-  {% set items_out = signouts|selectattr('returned', 'equalto', false)|list %}
-  {% if items_out|length > 0 %}
-   <div class="table-responsive text-white" width="100%" >
-   <table class="table-dark bg-dark table table-hover glassmorphism" id="items-table">
-   <thead class="neumorphic-thead">
+{% include 'dashboard.html' %}
+{% set items_out = signouts|selectattr('returned', 'equalto', false)|list %}
+{% if items_out|length > 0 %}
+<div class="table-responsive">
+  <table class="table table-striped" id="items-table">
+      <thead class="thead-light">
     <tr>
-     <th>
+      <th>
       TECH
-     </th>
+    </th>
      <th>
-      ITEM
-     </th>
+       ITEM
+      </th>
      <th>
       TYPE
      </th>
     </tr>
-   </thead>
-   <tbody class="neumorphic-tbody">
+  </thead>
+  <tbody class="tbody">
     {% for signout in items_out %}
     <tr>
-     <td>
-      {{ signout.technician.name }}
-     </td>
-     <td>
-      {{ signout.item.name }}
-     </td>
-     <td>
-      {{ signout.item.item_type }}
-     </td>
+      <td>
+        {{ signout.technician.name }}
+      </td>
+      <td>
+        {{ signout.item.name }}
+      </td>
+      <td>
+        {{ signout.item.item_type }}
+      </td>
     </tr>
     {% endfor %}
-   </tbody>
-  </table>
+  </tbody>
+</table>
  </div>
-<script>
- (function() {
-      $(document).ready(function() {
-        var itemsTable = $('#items-table').DataTable({
-          language: {
-            search: "Filter items:",
-            lengthMenu: "Show _MENU_ items per page",
+ <script>
+   (function() {
+     $(document).ready(function() {
+       var itemsTable = $('#items-table').DataTable({
+         language: {
+           search: "Filter items:",
+           lengthMenu: "Show _MENU_ items per page",
             info: "Showing _START_ to _END_ of _TOTAL_ items",
             infoEmpty: "No items available",
             infoFiltered: "(filtered from _MAX_ total items)",
@@ -57,18 +58,17 @@
         });
       });
     })();
-</script>
-{% else %}
-<h2 style="color: #000; font-family: Arial, sans-serif; font-size: 24p; color: white;">
- Welcome, {{ technicianName }} 
+  </script>
+  {% else %}
+  <h2 class="panel-heading" style="color: #000; font-family: Arial, sans-serif; font-size: 24p; color: rgb(0, 0, 0);">
+    Welcome, {{ tech.name }}
 </h2>
-<p style="color: #000; font-family: Arial, sans-serif; font-size: 18px; color: white;">
+<p style="color: #000; font-family: Arial, sans-serif; font-size: 18px; color: rgb(0, 0, 0);">
  There are no items signed out.
 </p>
 {% endif %} 
-{% include 'loader.html' %}
 <script>
- // Show the loader when the page starts loading
+  // Show the loader when the page starts loading
   document.addEventListener('DOMContentLoaded', function () {
       document.getElementById('loader').style.display = 'flex';
   });
@@ -85,3 +85,6 @@
   });
 </script>
 {% endblock %}
+
+
+
